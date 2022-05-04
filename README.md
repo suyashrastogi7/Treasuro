@@ -6,5 +6,5 @@ Contribution Guidelines -
 
 | Emoji/Type | Represents | Emoji/Type | Represents | Emoji/Type | Represents |
 | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-|     🐛 `bug`    |    Bug reports    |     📄`doc`       | Documentation            |     💻️`code`       | Code |
-|     🛠️ `fix`    |    Fix    |     🎨`design`       | Design            |     💡`idea`       |Idea |
+|     🐛 `bug`    |    Bug reports    |     📄 `doc`       | Documentation            |     💻️ `code`       | Code |
+|     🛠️ `fix`    |    Fix    |     🎨 `design`       | Design            |     💡 `idea`       |Idea |
