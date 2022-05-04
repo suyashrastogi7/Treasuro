@@ -2,6 +2,8 @@
 
 This is the official repository of Treasuro-2022
 
+Contribution Guidelines -
+
 | Emoji/Type | Represents | Emoji/Type | Represents | Emoji/Type | Represents |
 | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
 |     🐛 `bug`    |    Bug reports    |     📄`doc`       | Documentation            |     💻️`code`       | Code |
