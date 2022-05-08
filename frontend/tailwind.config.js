@@ -8,7 +8,7 @@ module.exports = {
         "purple-tertiary": "#5400C2",
         lime: "#98FF9D",
         yellow: "#FFC800",
-        "hot-pink": "#FFC800",
+        "hot-pink": "#F911BA",
         "base-primary": "#121638",
         "base-secondary": "#171C46",
         "highlight-orange": "#FFA800",
