@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Cross, Hamburger, LogoWhite } from "./AssestsExport";
+
 import NavLinks from "./NavLinks";
 
 const Navbar = () => {
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <nav className="z-10 flex justify-between items-center mx-auto my-6 w-[90vw] text-white font-semibold">
       <Link to="/" className="z-10">

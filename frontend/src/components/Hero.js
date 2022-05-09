@@ -1,9 +1,19 @@
-import { Blob1, Blob2, Blob3, LogoMain, ScrollIcon } from "./AssestsExport";
+import {
+  Blob1,
+  Blob2,
+  Blob3,
+  LeavesPink,
+  LogoMain,
+  ScrollIcon,
+  Starfish,
+  Weed1,
+  Weed2,
+} from "./AssestsExport";
 import Navbar from "./Navbar";
 
 const Hero = () => {
   return (
-    <div className="relative h-[95vh] md:h-screen overflow-hidden bg-purple-primary">
+    <div className="relative min-h-[95vh] md:h-screen overflow-hidden bg-purple-primary">
       <Navbar />
       {/* center part */}
       <div className="relative z-10 grid place-items-center mt-[10vh] md:mt-[16vh]">
@@ -19,10 +29,10 @@ const Hero = () => {
           And win prizes
         </p>
       </div>
-      <div className="text-center">
+      <div className="text-center cursor-pointer">
         <img
           src={ScrollIcon}
-          className="mx-auto mt-12 w-6  relative z-10"
+          className="mx-auto mt-20 w-8  relative z-10"
           alt="scroll icon"
         />
       </div>
@@ -41,6 +51,37 @@ const Hero = () => {
         className="absolute -bottom-0 md:-bottom-[100px] w-full"
         src={Blob1}
         alt="bottom blob"
+      />
+      {/* overlay elements */}
+      <img
+        className="absolute z-[9] top-32  min-w-[60px] max-w-[10vw]"
+        src={Weed1}
+        alt=""
+      />
+      <img
+        className="absolute z-[9] hidden md:block w-20 left-[30vw] bottom-[30vh]"
+        src={Starfish}
+        alt=""
+      />
+      <img
+        className="absolute z-[9] hidden md:block top-[40vh] right-[10vw]"
+        src={Starfish}
+        alt=""
+      />
+      <img
+        className="absolute z-[9] bottom-0 left-[20vw] min-w-[60px] max-w-[10vw] "
+        src={Weed2}
+        alt=""
+      />
+      <img
+        className="absolute z-[9] -bottom-[30px] md:-bottom-[6%] left-[65vw] min-w-[60px] max-w-[10vw] -rotate-90"
+        src={Weed1}
+        alt=""
+      />
+      <img
+        className="absolute z-[9] w-16 bottom-[15vh] right-0"
+        src={LeavesPink}
+        alt=""
       />
     </div>
   );
