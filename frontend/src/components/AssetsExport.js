@@ -6,7 +6,7 @@ import LeavesPink from "../assets/images/leavesPink.svg";
 import LogoGreen from "../assets/images/logoGreen.svg";
 import LogoMain from "../assets/images/logoMain.svg";
 import LogoWhite from "../assets/images/logoWhite.svg";
-import PriceLines from "../assets/images/priceLines.svg";
+import PrizeLines from "../assets/images/prizeLines.svg";
 import ScrollIcon from "../assets/images/scrollIcon.svg";
 import Starfish from "../assets/images/starfish.svg";
 import StarfishYellow from "../assets/images/starfishYellow.svg";
@@ -15,6 +15,11 @@ import Weed1Black from "../assets/images/weed1Black.svg";
 import Weed1Lime from "../assets/images/weed1Lime.svg";
 import Weed1Yellow from "../assets/images/weed1Yellow.svg";
 import Weed2 from "../assets/images/weed2.svg";
+import FirstPrize from "../assets/images/firstPrize.png";
+import SecondPrize from "../assets/images/secondPrize.png";
+import ThirdPrize from "../assets/images/thirdPrize.png";
+import MmilLogo from "../assets/images/mmilLogo.png";
+import Submarine from "../assets/images/submarine.png";
 
 import Discord from "../assets/icons/discord.svg";
 import Github from "../assets/icons/github.svg";
@@ -33,7 +38,7 @@ export {
   LogoGreen,
   LogoMain,
   LogoWhite,
-  PriceLines,
+  PrizeLines,
   ScrollIcon,
   Starfish,
   StarfishYellow,
@@ -42,6 +47,11 @@ export {
   Weed1Lime,
   Weed1Yellow,
   Weed2,
+  FirstPrize,
+  SecondPrize,
+  ThirdPrize,
+  MmilLogo,
+  Submarine,
   Discord,
   Github,
   Linkedin,

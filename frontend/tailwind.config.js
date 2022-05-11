@@ -14,6 +14,9 @@ module.exports = {
         "highlight-orange": "#FFA800",
         "highlight-yellow": "#FDFF98",
       },
+      backgroundImage: {
+        bgLines: "url('./assets/images/prizeLines.svg')",
+      },
     },
   },
   plugins: [],
