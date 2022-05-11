@@ -7,7 +7,7 @@ const Prizes = () => {
       <div className="absolute top-0 left-0 w-full h-full z-0 bg-bgLines"></div>
       <div className="relative z-10">
         <TitleDash title="prizes" />
-        <p className="text-4xl sm:text-5xl font text-yellow font-bold mt-8 mb-12">
+        <p className="text-4xl sm:text-5xl font text-yellow font-bold mt-12 mb-12">
           Participate and Win!
         </p>
         <div className="w-11/12 md:w-10/12 mx-auto">

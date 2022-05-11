@@ -18,6 +18,7 @@ import Weed2 from "../assets/images/weed2.svg";
 import FirstPrize from "../assets/images/firstPrize.png";
 import SecondPrize from "../assets/images/secondPrize.png";
 import ThirdPrize from "../assets/images/thirdPrize.png";
+import MmilLogo from "../assets/images/mmilLogo.png";
 
 import Discord from "../assets/icons/discord.svg";
 import Github from "../assets/icons/github.svg";
@@ -48,6 +49,7 @@ export {
   FirstPrize,
   SecondPrize,
   ThirdPrize,
+  MmilLogo,
   Discord,
   Github,
   Linkedin,
