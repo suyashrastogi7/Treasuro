@@ -20,7 +20,7 @@ const Invite = () => {
   const list = data.map((el) => {
     return (
       <div
-        className="relative rounded bg-purple-primary py-10 px-4 text-left w-3/12 min-w-[200px] min-h-[210px] overflow-hidden mt-10 md:mt-0 mx-2
+        className="relative rounded bg-purple-secondary py-10 px-4 text-left w-3/12 min-w-[200px] min-h-[210px] overflow-hidden mt-10 md:mt-0 mx-2
           after:absolute after:left-0 after:-bottom-[20px] after:h-[40px] after:w-full after:bg-lime after:-rotate-3
         "
         key={Math.random()}
@@ -32,7 +32,7 @@ const Invite = () => {
   });
 
   return (
-    <div className="relative bg-purple-secondary pb-20 before:absolute before:w-full before:z-[1] before:h-24 before:bg-base-primary">
+    <div className="relative bg-purple-primary pb-20 before:absolute before:w-full before:z-[1] before:h-24 before:bg-base-primary">
       <div className="relative z-[2] md:w-11/12 lg:w-10/12 mx-auto bg-purple-tertiary rounded-lg px-12 py-16 text-center">
         <TitleDash title="why?" />
         <p className="text-4xl sm:text-5xl font text-lime font-bold mt-8 mb-12">

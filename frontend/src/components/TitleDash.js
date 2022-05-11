@@ -7,8 +7,8 @@ const TitleDash = ({ title = "Hello", isTop, isYellow, ...props }) => {
           before:absolute 
           ${!isTop && "before:-bottom-[8px]"} 
           ${isTop && "before:-top-[8px]"} 
-          before:w-[28px] before:h-[5px] before:${
-            isYellow ? "bg-yellow" : "bg-hot-pink"
+          before:w-[28px] before:h-[5px] ${
+            isYellow ? "before:bg-yellow" : "before:bg-hot-pink"
           } before:rounded
          `}
       {...props}
