@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Cross, Hamburger, LogoWhite } from "./AssestsExport";
+import { Cross, Hamburger, LogoWhite } from "./AssetsExport";
 
 import NavLinks from "./NavLinks";
 

@@ -1,4 +1,4 @@
-import { LogoMain, ScrollIcon } from "./AssestsExport";
+import { LogoMain, ScrollIcon } from "./AssetsExport";
 import HeroOverlay from "./HeroOverlay";
 
 import Navbar from "./Navbar";
