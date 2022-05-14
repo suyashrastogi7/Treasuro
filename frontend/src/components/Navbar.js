@@ -8,11 +8,11 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <nav className="z-10 flex justify-between items-center mx-auto my-6 w-[90vw] text-white font-semibold">
+    <nav className="z-10 flex justify-between md:justify-center items-center mx-auto mt-12 mb-6 w-[90vw] text-white font-semibold">
       <Link to="/" className="z-10">
         <img className="cursor-pointer w-24 z-10" src={LogoWhite} alt="" />
       </Link>
-      <div className="hidden z-10 md:flex justify-between items-center w-full ml-[100px]">
+      <div className="hidden z-10 md:flex justify-between items-center w-9/12 ml-[100px]">
         <NavLinks />
       </div>
       <div className="md:hidden z-10">

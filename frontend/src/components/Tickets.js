@@ -6,16 +6,16 @@ const Tickets = () => {
   return (
     <div className="bg-purple-primary px-4 md:px-16 py-32">
       <TitleDash title="why to buy tickets?" />
-      <p className="text-4xl sm:text-5xl font text-lime font-bold mt-8 mb-12">
+      <p className="text-3xl md:text-[64px] font text-lime font-bold mt-8 mb-12">
         Tickets?
       </p>
       {/* ticket */}
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch lg:justify-start mt-24 w-11/12 md:w-10/12 mx-auto">
-        <div className="bg-base-primary rounded px-8 py-12 min-w-[300px] w-11/12 sm:w-[400px]">
-          <div className="text-sm  font-semibold text-white uppercase tracking-wide">
+      <div className="flex flex-col lg:flex-row items-center lg:items-stretch lg:justify-start mt-12 md:mt-24 w-full mx-auto">
+        <div className="bg-base-primary rounded px-8 py-12 w-full sm:w-10/12 md:w-[500px] ">
+          <div className="text-md  font-semibold text-white uppercase tracking-wide">
             <p>three-uses-only</p>
           </div>
-          <div className="text-center text-3xl font-bold text-white uppercase py-8">
+          <div className="text-center text-4xl md:text-6xl font-bold text-white uppercase py-8">
             <p>afky-4649</p>
           </div>
           <div className="flex justify-between">
@@ -24,7 +24,7 @@ const Tickets = () => {
           </div>
           {/* lines and text */}
         </div>
-        <div className=" hidden lg:flex flex-col justify-between ml-32 w-6/12">
+        <div className=" hidden lg:flex flex-col justify-between ml-10 w-6/12">
           <div className="flex">
             <div className="w-32 h-3 bg-white -rotate-12"></div>
             <p className=" text-white text-3xl font-bold ml-20 -mt-12">
