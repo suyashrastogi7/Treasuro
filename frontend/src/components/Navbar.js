@@ -8,7 +8,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <nav className="z-10 flex justify-between md:justify-center items-center mx-auto mt-12 mb-6 w-[90vw] text-white font-semibold">
+    <nav className="z-10 flex justify-between md:justify-center items-center mx-auto pt-12 mb-6 w-[90vw] text-white font-semibold">
       <Link to="/" className="z-10">
         <img className="cursor-pointer w-24 z-10" src={LogoWhite} alt="" />
       </Link>

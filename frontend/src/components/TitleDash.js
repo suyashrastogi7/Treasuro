@@ -1,5 +1,3 @@
-import React from "react";
-
 const TitleDash = ({
   title = "Hello",
   isTop,

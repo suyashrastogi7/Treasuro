@@ -1,5 +1,3 @@
-import React from "react";
-
 const FooterMade = () => {
   return (
     <div className="bg-base-primary text-center text-white py-3 text-lg tracking-wider">
