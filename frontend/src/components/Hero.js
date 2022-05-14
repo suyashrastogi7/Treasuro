@@ -11,7 +11,7 @@ const Hero = () => {
       <div className="relative z-10 grid place-items-center mt-[10vh] md:mt-[16vh]">
         <img
           src={LogoMain}
-          className=" w-[300px] md:w-[360px] h-auto"
+          className=" w-[250px] md:w-[360px] h-auto"
           alt="Treasuro 2022"
         />
         <p className="max-w-[160px] text-[20px] mt-[30px] tracking-wider text-center text-white font-bold">

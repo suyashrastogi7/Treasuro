@@ -37,7 +37,7 @@ const JoinUs = () => {
         />
         <img
           src={Submarine}
-          className="absolute right-[10%] bottom-[20%] w-44"
+          className="absolute right-[2%] md:right-[10%] bottom-[20%] w-44"
           alt=""
         />
       </div>

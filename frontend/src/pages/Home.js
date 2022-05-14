@@ -1,4 +1,6 @@
 import React from "react";
+import Footer from "../components/Footer";
+import FooterMade from "../components/FooterMade";
 import Hero from "../components/Hero";
 import Invite from "../components/Invite";
 import JoinUs from "../components/JoinUs";
@@ -13,6 +15,8 @@ const Home = () => {
       <Prizes />
       <Tickets />
       <JoinUs />
+      <Footer />
+      <FooterMade />
     </div>
   );
 };
