@@ -1,0 +1,38 @@
+{
+  "name": "treasuro-backend",
+  "version": "1.0.0",
+  "description": "Backend code of Treasuro 2021",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushpaharia/treasuro-backend.git"
+  },
+  "keywords": [],
+  "author": "team@Treasuro",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.26.2",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.0",
+    "helmet": "^4.6.0",
+    "imagemin": "^8.0.0",
+    "imagemin-mozjpeg": "^9.0.0",
+    "is-jpg": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.14",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.23",
+    "sharp": "^0.28.3"
+  },
+  "devDependencies": {
+    "@types/shortid": "^0.0.29",
+    "nodemon": "^2.0.6"
+  }
+}
