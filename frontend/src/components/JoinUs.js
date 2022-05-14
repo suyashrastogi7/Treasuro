@@ -12,13 +12,13 @@ const JoinUs = () => {
   return (
     <div className="flex justify-between flex-col lg:flex-row">
       {/* left */}
-      <div className="relative w-full h-[360px]  lg:w-6/12 bg-lime px-20 py-16">
+      <div className="relative w-full min-h-full lg:w-6/12 bg-lime px-20 py-16">
         <div className="relative z-20">
-          <p className="text-base-primary text-4xl my-8 font-bold w-48">
+          <p className="text-base-primary text-3xl sm:text-5xl md:4xl my-8 font-bold w-11/12 md:w-6/12">
             Still have a doubt ?
           </p>
           <Link
-            to="/hello"
+            to="/"
             className="w-max text-white text-md flex justify-between px-4 py-2 bg-base-primary rounded-3xl items-center space-x-4"
           >
             <span>Contact Us</span>
@@ -45,13 +45,15 @@ const JoinUs = () => {
       {/* right */}
       <div className="relative w-full lg:w-6/12 bg-highlight-orange px-20 py-16">
         <p
-          className={`relative tracking-widest text-sm text-base-primary font-bold uppercase w-max my-8
-          before:absolute before:w-[28px] before:h-[5px] before:-bottom-[8px] before:bg-base-primary before:rounded
+          className={`relative tracking-widest text-sm md:text-lg lg:text-2xl text-base-primary font-black uppercase min-w-max my-8
+          before:absolute  before:w-[35px] md:w-[48px] before:h-[6px] before:md:h-[9px] before:-bottom-[8px] before:md:-bottom-[12px] before:bg-base-primary before:rounded
          `}
         >
           still looking?
         </p>
-        <p className="text-base-primary text-4xl my-8 font-bold">Join Us!</p>
+        <p className="text-base-primary text-3xl sm:text-5xl md:4xl my-8 font-bold">
+          Join Us!
+        </p>
         <Link
           to="/"
           className="w-max text-white text-md flex justify-between px-4 py-2 bg-base-primary rounded-3xl items-center space-x-4"
