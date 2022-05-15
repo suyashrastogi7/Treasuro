@@ -7,7 +7,7 @@ const TitleDash = ({
 }) => {
   return (
     <p
-      className={`relative tracking-widest text-sm md:text-lg lg:text-2xl text-white font-bold md:font-black uppercase min-w-max
+      className={`relative tracking-widest text-md md:text-lg lg:text-2xl text-white font-bold md:font-black uppercase min-w-max
           before:absolute 
           ${!isTop && "before:-bottom-[8px] before:md:-bottom-[12px]"} 
           ${isTop && "before:-top-[12px] before:md:-top-[18px]"} 

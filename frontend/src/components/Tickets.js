@@ -43,16 +43,15 @@ const Tickets = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col lg:hidden text-white text-xl font-bold space-y-2 mt-8 min-w-[300px] w-11/12 sm:w-[400px]">
-          <p className="bg-purple-tertiary px-4 py-2 rounded">
-            Provide 2 days full of adventure
+        {/* Features */}
+        <div className="flex flex-col lg:hidden rounded-lg bg-purple-tertiary text-white text-xl font-bold space-y-2 py-6 mt-8 w-full mx-auto">
+          <p className="px-4 py-2 rounded">
+            1. Provide 2 days full of adventure
           </p>
-          <p className="bg-purple-tertiary px-4 py-2 rounded">
-            Chance to unlock your core memory
+          <p className="px-4 py-2 rounded">
+            2. Chance to unlock your core memory
           </p>
-          <p className="bg-purple-tertiary px-4 py-2 rounded">
-            Best ₹40 you will ever spend
-          </p>
+          <p className="px-4 py-2 rounded">3. Best ₹40 you will ever spend</p>
         </div>
       </div>
     </div>

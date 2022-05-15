@@ -1,7 +1,7 @@
 import { Discord, Github, Linkedin, Mail } from "./AssetsExport";
 const FooterSocials = () => {
   return (
-    <div className="flex justify-between mt-16 md:mt-24 w-full md:w-56 ">
+    <div className="flex justify-between mx-auto mt-16 md:mt-24 w-[320px] md:w-56 ">
       <a href="https://github.com/MMIL" target="_blank" rel="noreferrer">
         <img
           className="w-8 ease-linear duration-200 hover:scale-110"
