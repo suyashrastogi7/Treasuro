@@ -1,12 +1,10 @@
 import { LeavesPink, Weed1 } from "./AssetsExport";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 
-const Template = ({ children, className, ...props }) => {
+const Template = ({ children, className = "", ...props }) => {
   return (
-    <div
-      {...props}
-      className={`${className} bg-purple-secondary pb-8 h-screen`}
-    >
+    <div {...props} className={`${className} bg-purple-secondary min-h-screen`}>
       <Navbar />
       <div className="relative mt-24 mx-6 md:mx-16 px-4 py-2 bg-purple-tertiary rounded-md">
         <img
@@ -22,6 +20,9 @@ const Template = ({ children, className, ...props }) => {
         <div className="py-2 sm:py-6 md:py-10 px-1 sm:px-4 md:px-8">
           {children}
         </div>
+      </div>
+      <div className="mt-16">
+        <Footer />
       </div>
     </div>
   );

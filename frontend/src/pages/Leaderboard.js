@@ -1,4 +1,5 @@
 import { v4 } from "uuid";
+import RankRow from "../components/RankRow";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 
@@ -14,34 +15,22 @@ const data = {
 };
 
 const Leaderboard = () => {
-  const clsArr = ["bg-hot-pink", "bg-light-pink", "bg-yellow"];
-
-  const List = data.top50?.map(({ pos, name, pts }, idx) => (
-    <div
-      className={`mt-2 flex text-white font-bold text-base md:text-lg rounded-[20px]
-      ${clsArr[idx] ?? "bg-purple-primary"}`}
-      key={v4()}
-    >
-      <p className="w-3/12 md:w-1/12 py-2 text-center">{pos}</p>
-      <p className="w-6/12 md:w-10/12 py-2 pl-4">{name}</p>
-      <p className="w-3/12 md:w-1/12 py-2 text-center">{pts}</p>
-    </div>
+  const List = data.top50?.map((el, idx) => (
+    <RankRow {...el} idx={idx} key={v4()} />
   ));
-
   const You = data?.mine && (
-    <div
-      className={`mt-8 mb-6 flex text-white font-bold text-base md:text-lg rounded-[20px] border-2 border-white`}
-      key={v4()}
-    >
-      <p className="w-3/12 md:w-1/12 py-2 text-center">{data.mine.pos}</p>
-      <p className="w-6/12 md:w-10/12 py-2 pl-4">{data.mine.name}</p>
-      <p className="w-3/12 md:w-1/12 py-2 text-center">{data.mine.pts}</p>
-    </div>
+    <RankRow
+      pos={data.mine.pos}
+      name={data.mine.name}
+      pts={data.mine.pts}
+      idx={-1}
+      spec="border-2 border-white mb-6 mt-8"
+    />
   );
 
   return (
     <Template>
-      <div className="">
+      <div>
         <TitleDash title="leaderboard" />
       </div>
       <div className="mt-12 mb-6 flex text-white font-black text-lg md:text-xl">
