@@ -1,7 +1,6 @@
-import { LogoMain, ScrollIcon } from "./AssetsExport";
+import { LogoMain, ScrollIcon } from "../AssetsExport";
 import HeroOverlay from "./HeroOverlay";
-
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 
 const Hero = () => {
   return (

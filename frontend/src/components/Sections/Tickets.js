@@ -1,5 +1,5 @@
-import { LogoMain, MmilLogo } from "./AssetsExport";
-import TitleDash from "./TitleDash";
+import { LogoMain, MmilLogo } from "../AssetsExport";
+import TitleDash from "../TitleDash";
 
 const Tickets = () => {
   return (

@@ -1,4 +1,4 @@
-import { Discord, Github, Linkedin, Mail } from "./AssetsExport";
+import { Discord, Github, Linkedin, Mail } from "../AssetsExport";
 const FooterSocials = () => {
   return (
     <div className="flex justify-between mx-auto mt-16 md:mt-24 w-[320px] md:w-56 ">

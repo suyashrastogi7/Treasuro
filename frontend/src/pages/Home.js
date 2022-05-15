@@ -1,16 +1,16 @@
 import Footer from "../components/Footer";
-import FooterMade from "../components/FooterMade";
+import FooterMade from "../components/Footer/FooterMade";
 import Hero from "../components/Hero";
-import Invite from "../components/Invite";
-import JoinUs from "../components/JoinUs";
-import Prizes from "../components/Prizes";
-import Tickets from "../components/Tickets";
+import Why from "../components/Sections/Why";
+import JoinUs from "../components/Sections/JoinUs";
+import Prizes from "../components/Sections/Prizes";
+import Tickets from "../components/Sections/Tickets";
 
 const Home = () => {
   return (
     <div>
       <Hero />
-      <Invite />
+      <Why />
       <Prizes />
       <Tickets />
       <JoinUs />

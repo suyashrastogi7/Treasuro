@@ -5,7 +5,7 @@ import {
   Weed1Black,
   Weed1Lime,
   Weed1Yellow,
-} from "./AssetsExport";
+} from "../AssetsExport";
 
 const JoinUs = () => {
   return (

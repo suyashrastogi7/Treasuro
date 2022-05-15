@@ -7,7 +7,7 @@ import {
   StarfishYellow,
   Weed1,
   Weed2,
-} from "./AssetsExport";
+} from "../AssetsExport";
 
 const HeroOverlay = () => {
   return (

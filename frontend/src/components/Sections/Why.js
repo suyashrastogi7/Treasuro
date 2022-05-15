@@ -1,4 +1,4 @@
-import TitleDash from "./TitleDash";
+import TitleDash from "../TitleDash";
 import { v4 } from "uuid";
 
 const data = [
@@ -17,7 +17,7 @@ const data = [
   },
 ];
 
-const Invite = () => {
+const Why = () => {
   const list = data.map((el) => {
     return (
       <div
@@ -54,4 +54,4 @@ const Invite = () => {
   );
 };
 
-export default Invite;
+export default Why;

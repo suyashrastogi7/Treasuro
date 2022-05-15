@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LogoGreen } from "./AssetsExport";
+import { LogoGreen } from "../AssetsExport";
 import FooterSocials from "./FooterSocials";
 
 const Footer = () => {
