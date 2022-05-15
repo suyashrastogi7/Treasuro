@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { Arrow } from "./AssetsExport";
 
 const NavLinks = () => {
   return (
-    <>
-      <Link to="/">
+    <div className="relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-20 mx-6 lg:mx-8">
+      <Link to="/leaderboard">
         <span className="cursor-pointer py-5">Leaderboard</span>
       </Link>
       <Link to="/">
@@ -16,13 +15,7 @@ const NavLinks = () => {
       <Link to="/">
         <span className="cursor-pointer py-5">Tickets</span>
       </Link>
-      <Link to="/">
-        <button className="flex justify-between items-center cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 bg-hot-pink font-semibold">
-          <span className="mr-1">SignIn</span>
-          <img src={Arrow} alt="arrow" />
-        </button>
-      </Link>
-    </>
+    </div>
   );
 };
 

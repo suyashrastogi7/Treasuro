@@ -1,11 +1,10 @@
-import { LogoMain, ScrollIcon } from "./AssetsExport";
+import { LogoMain, ScrollIcon } from "../AssetsExport";
 import HeroOverlay from "./HeroOverlay";
-
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-[95vh] md:h-screen overflow-hidden bg-purple-primary">
+    <div className="relative min-h-[100vh] md:h-screen overflow-hidden bg-purple-primary">
       <Navbar />
       {/* center part */}
       <div className="relative z-10 grid place-items-center mt-[10vh] md:mt-[16vh]">

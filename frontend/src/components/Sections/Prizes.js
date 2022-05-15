@@ -1,5 +1,5 @@
-import { FirstPrize, SecondPrize, ThirdPrize } from "./AssetsExport";
-import TitleDash from "./TitleDash";
+import { FirstPrize, SecondPrize, ThirdPrize } from "../AssetsExport";
+import TitleDash from "../TitleDash";
 
 const Prizes = () => {
   return (

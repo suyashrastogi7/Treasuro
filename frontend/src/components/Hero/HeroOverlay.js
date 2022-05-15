@@ -7,7 +7,7 @@ import {
   StarfishYellow,
   Weed1,
   Weed2,
-} from "./AssetsExport";
+} from "../AssetsExport";
 
 const HeroOverlay = () => {
   return (
@@ -35,12 +35,12 @@ const HeroOverlay = () => {
         alt=""
       />
       <img
-        className="absolute z-[9] hidden md:block w-20 left-[30vw] bottom-[30vh]"
+        className="absolute z-[9] md:block w-20 left-8 md:left-[30vw] bottom-[25vh]"
         src={StarfishYellow}
         alt=""
       />
       <img
-        className="absolute z-[9] hidden md:block top-[40vh] right-[10vw]"
+        className="absolute z-[9] w-[65px] md:w-[120px] md:block top-[47vh] md:top-[40vh] right-[4vw] md:right-[10vw]"
         src={Starfish}
         alt=""
       />
