@@ -59,7 +59,7 @@ router.post("/payment-verification", verifyPayment);
 
 /**
  * @route   POST /api/auth/razorpay
- * @access  Public
+ * @access  Private
  * @desc    Make payment and create the order;
  */
 
