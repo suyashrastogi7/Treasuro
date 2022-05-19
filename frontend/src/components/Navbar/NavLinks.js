@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Arrow } from "./AssetsExport";
+import { Arrow } from "../AssetsExport";
 import axios from "axios";
 
 const NavLinks = () => {
