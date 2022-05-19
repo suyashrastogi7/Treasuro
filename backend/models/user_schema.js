@@ -59,7 +59,11 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
   ticketsPurchased: {
-    type: { type: [Schema.Types.ObjectId], ref: "Ticket", default: [] },
+    type: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Ticket",
+      default: [],
+    },
   },
 });
 
