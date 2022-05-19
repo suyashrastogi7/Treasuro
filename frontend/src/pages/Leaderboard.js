@@ -33,10 +33,10 @@ const Leaderboard = () => {
       <div>
         <TitleDash title="leaderboard" />
       </div>
-      <div className="mt-12 mb-6 flex text-white font-black text-lg md:text-xl">
-        <p className="w-3/12 md:w-1/12 text-center">Pos</p>
-        <p className="w-6/12 md:w-10/12 pl-4">Name</p>
-        <p className="w-3/12 md:w-1/12 text-center">Points</p>
+      <div className="flex mt-12 mb-6 text-lg font-black text-white md:text-xl">
+        <p className="w-3/12 text-center md:w-1/12">Pos</p>
+        <p className="w-6/12 pl-4 md:w-10/12">Name</p>
+        <p className="w-3/12 text-center md:w-1/12">Points</p>
       </div>
       <div>{You}</div>
       <div>{List}</div>

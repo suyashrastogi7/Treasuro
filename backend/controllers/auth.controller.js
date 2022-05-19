@@ -7,6 +7,14 @@ const User = require("../models/user_schema");
 const showError = require("../utils/showError.js");
 const generateToken = require("../utils/generateToken");
 const { cloudinary } = require("../utils/cloudinary");
+const shortid = require("shortid");
+
+const Razorpay = require("razorpay");
+
+var razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_ID,
+  key_secret: process.env.RAZORPAY_SECRET,
+});
 
 const authUser = (req, res) => {
   const user = req.user;
@@ -25,6 +33,16 @@ const signUp = async (req, res) => {
 
   try {
     let { name, username, password, rollno, phoneno, email, image } = req.body;
+
+    const user = await User.findOne({
+      $or: [{ username }, { email }, { phoneno }, { rollno }],
+    });
+    //id user exists return error
+    if (user) {
+      return res
+        .status(400)
+        .send({ message: "User with given details already exists" });
+    }
 
     checkRegex({ rollno, phoneno }, res);
 
@@ -121,8 +139,61 @@ const signIn = async (req, res) => {
   }
 };
 
+const handlePayment = async (req, res, next) => {
+  const payment_capture = 1;
+  const amount = 500;
+  const currency = "INR";
+
+  const options = {
+    amount,
+    currency,
+    receipt: shortid.generate(),
+    payment_capture,
+    notes: {
+      userID: req.user.id,
+    },
+  };
+
+  try {
+    const response = await razorpay.orders.create(options);
+    console.log(response);
+    res.status(200).json({
+      id: response.id,
+      currency: response.currency,
+      amount: response.amount,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const verifyPayment = (req, res) => {
+  const SECRET = "99912345";
+
+  const shasum = crypto.createHmac("sha256", SECRET);
+  shasum.update(JSON.stringify(req.body));
+  const digest = shasum.digest("hex");
+
+  console.log(req.headers);
+
+  if (digest === req.headers["x-razorpay-signature"]) {
+    console.log(digest, true);
+    req.locals.paymentVerified = true;
+  } else {
+    console.log(digest, false);
+    req.locals.paymentVerified = false;
+  }
+
+  console.log(req.body);
+  res.status(200).json({
+    status: "ok",
+  });
+};
+
 module.exports = {
   signUp,
   signIn,
   authUser,
+  handlePayment,
+  verifyPayment,
 };

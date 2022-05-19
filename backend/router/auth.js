@@ -1,8 +1,14 @@
 const router = require("express").Router();
 const { check } = require("express-validator");
+const requireLogin = require("../middlewares/requireLogin");
 
 //controllers
-const { signIn, signUp } = require("../controllers/auth.controller");
+const {
+  signIn,
+  signUp,
+  handlePayment,
+  verifyPayment,
+} = require("../controllers/auth.controller");
 
 /**
  * @route   POST /api/auth/signup
@@ -49,33 +55,16 @@ router.post(
 
 // router.get("/verify-user/:token", authController.verifyAccount);
 
-app.post("/payment-verification", (req, res) => {
-  const SECRET = "12343210";
-
-  console.log(req.body);
-
-  const shasum = crypto.createHmac("sha256", SECRET);
-  shasum.update(JSON.stringify(req.body));
-  const digest = shasum.digest("hex");
-
-  console.log(req.headers);
-
-  if (digest === req.headers["x-razorpay-signature"]) {
-    req.locals.paymentVerified = true;
-  } else {
-    req.locals.paymentVerified = false;
-  }
-
-  console.log(req.body);
-  res.redirect("/signup");
-});
+router.post("/payment-verification", verifyPayment);
 
 /**
  * @route   POST /api/auth/razorpay
- * @access  Public
+ * @access  Private
  * @desc    Make payment and create the order;
  */
 
 // router.post("razorpay", authController.makePayment);
 
-app.post("/razorpay");
+router.post("/razorpay", requireLogin, handlePayment);
+
+module.exports = router;
