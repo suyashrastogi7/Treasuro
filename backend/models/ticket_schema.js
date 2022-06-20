@@ -1,22 +1,21 @@
 const mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
 const ticketSchema = new mongoose.Schema({
-  ticketID: { type: String, required: true },
-  payment: {
-    verified: {
-      type: Boolean,
-      required: true,
-      default: false,
+    ticketID: { type: String, required: true },
+    payment: {
+        verified: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        paymentID: { type: String },
     },
-    paymentID: { type: String },
-  },
-  userID: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    default: null,
-  },
+    userID: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        default: null,
+    },
 });
 
-const Ticket = mongoose.model("ticket", ticketSchema);
-
-export default Ticket;
+module.exports = mongoose.model("ticket", ticketSchema);
