@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import sampleReducer from "./features/sampleSlice";
+import rootReducer from "./rootReducer";
 
 const store = configureStore({
-  reducer: {
-    sample: sampleReducer,
-  },
+    reducer: rootReducer,
 });
 
 export default store;
