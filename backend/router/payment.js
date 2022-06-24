@@ -1,24 +1,27 @@
 const router = require("express").Router();
+const { check } = require("express-validator");
 
 //controllers
 const {
     createOrder,
     verifyPayment,
 } = require("../controllers/payment.controller");
+const requireLogin = require("../middlewares/requireLogin");
 
 /**
- * @route   POST /api/payment/create-order
+ * @route   GET /api/payment/createorder
  * @access  Public
  * @desc    Creates a razorpay order for payment
  */
 
-router.post(
-    "/payment/create-order",
+router.get(
+    "/createorder",
     [
         check("username", "username is required").not().isEmpty(),
         check("currency", "currency is required").not().isEmpty(),
         check("amount", "amount is required").not().isEmpty(),
     ],
+    requireLogin,
     createOrder
 );
 
@@ -29,7 +32,7 @@ router.post(
  */
 
 router.post(
-    "/payment/verify-payment",
+    "/verifypayment",
     [
         check("username", "username is required").not().isEmpty(),
         check("orderId", "orderId is required").not().isEmpty(),
@@ -43,6 +46,7 @@ router.post(
             .not()
             .isEmpty(),
     ],
+    requireLogin,
     verifyPayment
 );
 

@@ -34,6 +34,7 @@ app.use("/api/profile", require("./router/profile"));
 app.use("/api/question", require("./router/question"));
 app.use("/api/ticket", require("./router/ticket"));
 app.use("/api/leaderboard", require("./router/leaderboard"));
+app.use("/api/payment", require("./router/payment"));
 
 app.use("/", (_, res) => {
     res.status(200).json({
