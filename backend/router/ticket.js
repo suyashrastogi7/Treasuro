@@ -1,7 +1,13 @@
 const router = require("express").Router();
 const requireLogin = require("../middlewares/requireLogin");
+const requireAdmin = require("../middlewares/requireAdmin");
 
-const { purchaseTicket } = require("../controllers/ticket.controller");
+const {
+    purchaseTicket,
+    getAllTicketDetails,
+    getTicketDetails,
+    getUnassignedTicket,
+} = require("../controllers/ticket.controller");
 
 /**
  * @route   POST /api/ticket/purchase
@@ -17,7 +23,7 @@ router.post("/purchase", requireLogin, purchaseTicket);
  * @desc    View all  ticket
  */
 
-router.get("/all", requireAdmin, purchaseTicket);
+router.get("/all", requireAdmin, getAllTicketDetails);
 
 /**
  * @route   POST /api/ticket/:ticketID
@@ -34,3 +40,5 @@ router.get("/:ticketID", requireAdmin, getTicketDetails);
  */
 
 router.get("/undef", requireAdmin, getUnassignedTicket);
+
+module.exports = router;
