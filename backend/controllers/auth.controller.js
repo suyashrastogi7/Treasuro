@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 
 const { validationResult } = require("express-validator");
 const checkRegex = require("../middlewares/checkRegex");
+const { sendMail } = require("../utils/mail");
 
 const User = require("../models/user_schema");
 const showError = require("../utils/showError.js");
@@ -73,7 +74,7 @@ const signUp = async (req, res) => {
         // generate jwt for user
         const token = generateToken(newUser);
         await newUser.save();
-
+        sendMail(email, username);
         return res.status(200).json({
             user: {
                 name,
@@ -140,34 +141,6 @@ const signIn = async (req, res) => {
     }
 };
 
-const handlePayment = async (req, res, next) => {
-    const payment_capture = 1;
-    const amount = 500;
-    const currency = "INR";
-
-    const options = {
-        amount,
-        currency,
-        receipt: shortid.generate(),
-        payment_capture,
-        notes: {
-            userID: req.user.id,
-        },
-    };
-
-    try {
-        const response = await razorpay.orders.create(options);
-        console.log(response);
-        res.status(200).json({
-            id: response.id,
-            currency: response.currency,
-            amount: response.amount,
-        });
-    } catch (err) {
-        next(err);
-    }
-};
-
 const verifyPayment = (req, res) => {
     const SECRET = "99912345";
 
@@ -195,6 +168,5 @@ module.exports = {
     signUp,
     signIn,
     authUser,
-    handlePayment,
     verifyPayment,
 };
