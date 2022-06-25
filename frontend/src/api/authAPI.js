@@ -3,11 +3,12 @@ import axios from "axios";
 import { NETWORK_LATENCY } from "../utils/constants";
 
 export function signin({ username, password }) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            const response = axios.post(
+            const emailOrUsername = username;
+            const response = await axios.post(
                 "http://localhost:5000/api/auth/signin",
-                { username, password }
+                { emailOrUsername, password }
             );
             const { token, user } = response.data;
             return resolve({ token, user });
@@ -19,9 +20,9 @@ export function signin({ username, password }) {
 }
 
 export function signup({ data }) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            const response = axios.post(
+            const response = await axios.post(
                 "http://localhost:5000/api/auth/signup",
                 data
             );

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { login } from "../features/loginSlice";
 import { Arrow } from "../components/AssetsExport";
 import TitleDash from "../components/TitleDash";
@@ -15,7 +14,6 @@ const Auth = () => {
         rememberMe: false,
     });
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     return (
         <Template>
@@ -58,7 +56,7 @@ const Auth = () => {
                         setValue={setFormState}
                         Placeholder="Remember Me"
                         label="Remember Me"
-                        name="remember me"
+                        name="rememberMe"
                     />
                     <Link to="/signin" className="mx-4 mt-3">
                         <button
@@ -75,8 +73,9 @@ const Auth = () => {
     );
     async function handleOnClick(event) {
         event.preventDefault();
+        console.log(formState);
         await dispatch(login(formState));
-        navigate("/", { replace: true });
+        // navigate("/", { replace: true });
     }
 };
 

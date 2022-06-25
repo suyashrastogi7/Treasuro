@@ -19,9 +19,10 @@ function getToken() {
     return sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY);
 }
 
-async function login({ username, password, rememberMe }) {
+async function login({ username, password, rememberMe }, thunkAPI) {
     const { token, user } = await signin({ username, password });
-
+    console.log(token, user);
+    // thunkAPI.dispatch(setMessage());
     if (rememberMe) {
         localStorage.setItem(TOKEN_KEY, token);
     } else {
