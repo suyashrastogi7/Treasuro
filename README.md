@@ -2,13 +2,25 @@
 
 The most fun event of JSS, Noida, the hunt project that is awaited every year with the best prizes. 300+ Participants every year.
 
-## Technology Stack to be used:
+## Features:
+
+1. Login/Sign Up.
+2. JWT Authentication.
+3. Ticket Purchasing.
+4. Get ticket details.
+5. Online payment through Razorpay.
+6. Payment Verification through email.
+7. Questions are of two types, online or offline.
+8. Level wise questions and scores.
+9. Leaderboard.
+10. Answer based on Special QR code scan.
+
+## Technology Stack:
 
 <img src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white"> <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"/>  <img src="https://img.shields.io/badge/markdown-%23000000.svg?&style=for-the-badge&logo=markdown&logoColor=white"/><img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"> <img src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/> <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white"/>
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/21628293/UzBqpR7V)
 
-## Technology Stack:
 - **Frontend**: React, Redux
 - **Backend**: Node.js
 - **IDE**: VS Code
