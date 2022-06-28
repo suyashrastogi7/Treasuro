@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import Protected from "./components/Protected";
-
+import ProtectedRoute from "./components/Protected";
 import Home from "./pages/Home";
 import Leaderboard from "./pages/Leaderboard";
 import Auth from "./pages/Auth";
@@ -10,6 +10,7 @@ import Payment from "./pages/Payments";
 import Rules from "./pages/Rules";
 
 const App = () => {
+    const { loggedIn } = useSelector((state) => state.signin);
     return (
         <Router>
             <Routes>
@@ -17,26 +18,26 @@ const App = () => {
                 <Route
                     path="/leaderboard"
                     element={
-                        <Protected isLoggedIn={true}>
+                        <ProtectedRoute isLoggedIn={loggedIn}>
                             <Leaderboard />
-                        </Protected>
+                        </ProtectedRoute>
                     }
                 />
                 <Route path="/signin" element={<Auth />} />
                 <Route
                     path="/tickets"
                     element={
-                        <Protected isLoggedIn={true}>
+                        <ProtectedRoute isLoggedIn={loggedIn}>
                             <Tickets />
-                        </Protected>
+                        </ProtectedRoute>
                     }
                 />
                 <Route
                     path="/payment"
                     element={
-                        <Protected isLoggedIn={true}>
+                        <ProtectedRoute isLoggedIn={loggedIn}>
                             <Payment />
-                        </Protected>
+                        </ProtectedRoute>
                     }
                 />
                 <Route path="/rules" element={<Rules />} />
