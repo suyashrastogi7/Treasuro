@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const { check } = require("express-validator");
-const requireLogin = require("../middlewares/requireLogin");
+// const requireLogin = require("../middlewares/requireLogin");
 
 //controllers
-const { signIn, signUp } = require("../controllers/auth.controller");
+const {
+    signIn,
+    signUp,
+    refreshToken,
+} = require("../controllers/auth.controller");
 
 /**
  * @route   POST /api/auth/signup
@@ -41,5 +45,12 @@ router.post(
     ],
     signIn
 );
+
+/**
+ * @route   POST /api/auth/refresh
+ * @access  Public
+ * @desc    Register user
+ */
+router.post("/refresh", refreshToken);
 
 module.exports = router;
