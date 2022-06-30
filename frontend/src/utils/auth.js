@@ -1,5 +1,6 @@
-import { signin, signout, signup } from "../api/authAPI";
+import { signin, signup, renewAccess, getProfile } from "../api/authAPI";
 import { setMessage } from "../features/messageSlice";
+import Cookies from "js-cookie";
 
 const TOKEN_KEY = "_t4gd-*-";
 
@@ -9,6 +10,8 @@ export const auth = {
     login,
     logout,
     register,
+    renewAccessToken,
+    getUser,
 };
 
 function isAuthenticated() {
@@ -16,36 +19,62 @@ function isAuthenticated() {
 }
 
 function getToken() {
-    return sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY);
+    return Cookies.get("access-token") || localStorage.getItem(TOKEN_KEY);
 }
 
-async function login({ username, password, rememberMe }, thunkAPI) {
-    const { token, user } = await signin({ username, password });
-    console.log(token, user);
-    // thunkAPI.dispatch(setMessage());
-    if (rememberMe) {
-        localStorage.setItem(TOKEN_KEY, token);
-    } else {
-        sessionStorage.setItem(TOKEN_KEY, token);
-    }
+async function getUser(token) {
+    const user = await getProfile(token);
+    return user;
+}
 
+async function login({ username, password, rememberMe }) {
+    const { token, user } = await signin({ username, password });
+    Cookies.set("access-token", token.access, {
+        path: "/",
+        expires: new Date().setDate(new Date().getDate() + 1),
+    });
+    Cookies.set("refresh-token", token.refresh, {
+        path: "/",
+        expires: new Date().setDate(new Date().getDate() + 2),
+    });
+    if (rememberMe) {
+        localStorage.setItem(TOKEN_KEY, token.refresh);
+    }
     return { token, user };
 }
 
-async function register(data, thunkAPI) {
+async function renewAccessToken() {
+    try {
+        const refresh = Cookies.get("refresh-token");
+        const { token } = await renewAccess(refresh);
+        return Promise.resolve({ token });
+    } catch (err) {
+        return Promise.reject(err.response?.data?.msg);
+    }
+}
+
+async function register(data) {
     try {
         const response = await signup(data);
-        thunkAPI.dispatch(setMessage(response.data.message));
-        const { token, user } = response.data;
-        return { token, user };
+        // thunkAPI.dispatch(setMessage(response.data.message));
+        const { success } = response.data;
+        return { success };
     } catch (err) {
-        thunkAPI.dispatch(setMessage(err.message));
-        return thunkAPI.rejectWithValue();
+        // thunkAPI.dispatch(setMessage(err.message));
+        // return thunkAPI.rejectWithValue();
+        console.log(err);
     }
 }
 
 async function logout() {
-    await signout();
-    sessionStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(TOKEN_KEY);
+    try {
+        Cookies.remove("refresh-token");
+        Cookies.remove("access-token");
+        localStorage.removeItem(TOKEN_KEY);
+        return {
+            success: true,
+        };
+    } catch (err) {
+        console.log(err);
+    }
 }

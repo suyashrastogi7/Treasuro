@@ -23,6 +23,7 @@ import Submarine from "../assets/images/submarine.png";
 import paytm from "../assets/images/paytm.svg";
 import gpay from "../assets/images/gpay.svg";
 import scantopay from "../assets/images/scantopay.svg";
+import DefaultUSer from "../assets/images/default_user.webp";
 
 import Discord from "../assets/icons/discord.svg";
 import Github from "../assets/icons/github.svg";
@@ -31,6 +32,7 @@ import Mail from "../assets/icons/mail.svg";
 import Arrow from "../assets/icons/arrow.svg";
 import Hamburger from "../assets/icons/hamburger.svg";
 import Cross from "../assets/icons/cross.svg";
+import Refresh from "../assets/icons/refresh.svg";
 
 import loaderAnimationData from "../assets/lottie/loader.json";
 
@@ -45,6 +47,7 @@ export {
     LogoMain,
     LogoWhite,
     PrizeLines,
+    Refresh,
     ScrollIcon,
     Starfish,
     StarfishYellow,
@@ -68,4 +71,5 @@ export {
     paytm,
     gpay,
     scantopay,
+    DefaultUSer,
 };

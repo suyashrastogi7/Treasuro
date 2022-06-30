@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { v4 } from "uuid";
-import axios from "axios";
+import axios from "../utils/config";
+import { Refresh } from "../components/AssetsExport";
 import RankRow from "../components/RankRow";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 
 const Leaderboard = () => {
     const [data, setData] = useState();
-
-    async function getLeaderboard() {
-        try {
-            let config = {
-                headers: {
-                    Authorization:
-                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJiMDg3NDU5MjUxZjkyNDRjN2U5ZmY5In0sImlhdCI6MTY1NjAxNTA3NiwiZXhwIjoxNjU2MTAxNDc2fQ.NxKb5Zqz9HLiwEkzRchVVB7tPz6wXm4MwbitFx_3iqw",
-                },
-            };
-            const { data } = await axios.get(
-                "http://localhost:5000/api/leaderboard/",
-                config
-            );
-            console.log(data);
-            setData(data);
-        } catch (err) {
-            console.log(err);
-        }
-    }
+    const [refresh, setRefresh] = useState(false);
+    const { access } = useSelector((state) => state.signin.token);
 
     useEffect(() => {
+        async function getLeaderboard() {
+            try {
+                let config = {
+                    headers: {
+                        Authorization: `Bearer ${access}`,
+                    },
+                };
+                const { data } = await axios.get(
+                    "http://localhost:5000/api/leaderboard/",
+                    config
+                );
+                setData(data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
         getLeaderboard();
-    }, []);
+    }, [refresh, access]);
 
     const List = data?.leaderboard?.map((el, idx) => (
         <RankRow
@@ -53,8 +54,11 @@ const Leaderboard = () => {
 
     return (
         <Template>
-            <div>
+            <div className="flex justify-between align-start">
                 <TitleDash title="leaderboard" />
+                <button onClick={() => setRefresh((prev) => !prev)}>
+                    <img src={Refresh} alt="refresh" className="h-12 w-12" />
+                </button>
             </div>
             <div className="flex mt-12 mb-6 text-lg font-black text-white md:text-xl">
                 <p className="w-3/12 text-center md:w-1/12">Pos</p>
