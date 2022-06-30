@@ -1,24 +1,32 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { getCurrentUser } from "../api/userAPI";
 import { auth } from "../utils/auth";
 
 export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
-    if (auth.isAuthenticated()) {
-        const token = auth.getToken();
-        const user = await getCurrentUser({ token });
-
-        return { token, user };
-    }
-
-    return { token: null, user: null };
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (auth.isAuthenticated()) {
+                const token = auth.getToken();
+                const { user } = await auth.getUser(token);
+                console.log(user);
+                return resolve({ token, user });
+            }
+        } catch (err) {
+            return reject({ token: null, user: null });
+        }
+    });
 });
+
+export const renewToken = createAsyncThunk(
+    "renew/renewToken",
+    auth.renewAccessToken
+);
 
 export const login = createAsyncThunk("signin/login", auth.login);
 
 export const register = createAsyncThunk("signup/register", auth.register);
 
-export const logout = createAsyncThunk("signin/logout", auth.logout);
+export const logout = createAsyncThunk("signout/logout", auth.logout);
 
 const initialState = {
     loading: true,
@@ -47,10 +55,17 @@ export const signinSlice = createSlice({
         },
         [checkAuth.rejected]: receiveError,
 
+        [register.pending]: startLoading,
+        [register.fulfilled]: (state) => {
+            Object.assign(state, {
+                loading: false,
+            });
+        },
+        [register.rejected]: receiveError,
+
         [login.pending]: startLoading,
         [login.fulfilled]: (state, { payload }) => {
-            const { token, user } = payload;
-
+            const { user, token } = payload;
             Object.assign(state, {
                 loading: false,
                 loggedIn: true,
@@ -65,8 +80,21 @@ export const signinSlice = createSlice({
             Object.assign(state, {
                 ...initialState,
                 loading: false,
+                loggedIn: false,
+                loggedInUser: null,
+                token: null,
             }),
         [logout.rejected]: receiveError,
+
+        [renewToken.pending]: startLoading,
+        [renewToken.fulfilled]: (state, { payload }) => {
+            Object.assign(state, {
+                ...initialState,
+                loading: false,
+                token: payload,
+            });
+        },
+        [renewToken.rejected]: receiveError,
     },
 });
 
