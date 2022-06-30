@@ -1,27 +1,39 @@
 const bcrypt = require("bcryptjs");
-
+const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const checkRegex = require("../middlewares/checkRegex");
-const { sendMail } = require("../utils/mail");
+// const { sendMail } = require("../utils/mail");
 
 const User = require("../models/user_schema");
+
 const showError = require("../utils/showError.js");
 const generateToken = require("../utils/generateToken");
+const { verifyToken } = require("../utils/verifyToken");
 const { cloudinary } = require("../utils/cloudinary");
-const shortid = require("shortid");
 
-const Razorpay = require("razorpay");
-
-var razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
-
-const authUser = (req, res) => {
-    const user = req.user;
-    return res.status(200).json({
-        user,
-    });
+const refreshToken = async (req, res) => {
+    const { refresh } = req.body;
+    try {
+        const verified = await verifyToken(refresh);
+        if (verified.error)
+            res.status(400).json({
+                status: false,
+                msg: "Invalid Token, Please sign in Again",
+            });
+        const payload = {
+            user: {
+                id: verified?.token.user.id,
+            },
+        };
+        const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "14m",
+        });
+        return res.status(200).json({
+            token: accessToken,
+        });
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const signUp = async (req, res) => {
@@ -72,17 +84,9 @@ const signUp = async (req, res) => {
         console.log(newUser);
 
         // generate jwt for user
-        const token = generateToken(newUser);
         await newUser.save();
-        sendMail(email, username);
         return res.status(200).json({
-            user: {
-                name,
-                username,
-                email,
-                image: uploadedResponse.secure_url,
-            },
-            token,
+            success: true,
         });
     } catch (error) {
         showError(error, res);
@@ -141,32 +145,8 @@ const signIn = async (req, res) => {
     }
 };
 
-const verifyPayment = (req, res) => {
-    const SECRET = "99912345";
-
-    const shasum = crypto.createHmac("sha256", SECRET);
-    shasum.update(JSON.stringify(req.body));
-    const digest = shasum.digest("hex");
-
-    console.log(req.headers);
-
-    if (digest === req.headers["x-razorpay-signature"]) {
-        console.log(digest, true);
-        req.locals.paymentVerified = true;
-    } else {
-        console.log(digest, false);
-        req.locals.paymentVerified = false;
-    }
-
-    console.log(req.body);
-    res.status(200).json({
-        status: "ok",
-    });
-};
-
 module.exports = {
     signUp,
     signIn,
-    authUser,
-    verifyPayment,
+    refreshToken,
 };

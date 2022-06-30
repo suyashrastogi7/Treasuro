@@ -73,12 +73,12 @@ const verifyPayment = async (req, res) => {
 
         // comaparing our digest with the actual signature
         if (digest !== razorpay_signature)
-            return res
-                .status(400)
-                .json({
-                    msg: "Payment Failed : Signature Mismatch!",
-                    success: false,
-                });
+            return res.status(400).json({
+                msg: "Payment Failed : Signature Mismatch!",
+                orderId: null,
+                paymentId: null,
+                success: false,
+            });
 
         // THE PAYMENT IS LEGIT & VERIFIED
         // YOU CAN SAVE THE DETAILS IN YOUR DATABASE IF YOU WANT

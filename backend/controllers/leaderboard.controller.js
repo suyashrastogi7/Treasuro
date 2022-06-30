@@ -5,7 +5,7 @@ const showError = require("../utils/showError.js");
 
 const getLeaderboard = async (req, res) => {
     try {
-        const leaderboard = await User.find();
+        const leaderboard = await User.find({});
         const leaderboardTruncate = leaderboard.map((user) => ({
             name: user.name,
             pts: user.score,
