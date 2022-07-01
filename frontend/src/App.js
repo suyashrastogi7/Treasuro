@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import Tickets from "./pages/Ticket";
 import Success from "./pages/Success";
 import Payment from "./pages/Payments";
+import Question from "./pages/Question";
 import Rules from "./pages/Rules";
 
 const App = () => {
@@ -16,7 +17,6 @@ const App = () => {
     useEffect(() => {
         dispatch(checkAuth());
     }, [dispatch]);
-    console.log();
     return (
         <Router>
             <Routes>
@@ -35,6 +35,14 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                             <Tickets />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/questions"
+                    element={
+                        <ProtectedRoute>
+                            <Question />
                         </ProtectedRoute>
                     }
                 />

@@ -33,6 +33,8 @@ import Arrow from "../assets/icons/arrow.svg";
 import Hamburger from "../assets/icons/hamburger.svg";
 import Cross from "../assets/icons/cross.svg";
 import Refresh from "../assets/icons/refresh.svg";
+import Coin from "../assets/icons/coin.png";
+import Qr from "../assets/icons/qr.svg";
 
 import loaderAnimationData from "../assets/lottie/loader.json";
 
@@ -72,4 +74,6 @@ export {
     gpay,
     scantopay,
     DefaultUSer,
+    Coin,
+    Qr,
 };

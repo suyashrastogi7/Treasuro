@@ -30,12 +30,20 @@ const Ticket = ({ id, use }) => {
                         className="absolute right-1 scale-110"
                     />
                 )}
-                <h1 className="text-center font-bold text-5xl text-white my-8">
+                <h1 className="text-center font-bold lg:text-5xl text-4xl text-white my-8">
                     {id}
                 </h1>
                 <div className="flex justify-between">
-                    <img src={LogoMain} className="h-12" alt="treasuro-logo" />
-                    <img src={MmilLogo} className="h-12" alt="mmil-logo" />
+                    <img
+                        src={LogoMain}
+                        className="lg:h-12 h-8"
+                        alt="treasuro-logo"
+                    />
+                    <img
+                        src={MmilLogo}
+                        className="lg:h-12 h-8"
+                        alt="mmil-logo"
+                    />
                 </div>
             </div>
             <div className="bg-[#171C46] rounded-2xl px-8 py-5 -translate-y-5 z-10 hover:shadow-2xl transition ease-in-out">

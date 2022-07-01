@@ -1,5 +1,5 @@
 import { signin, signup, renewAccess, getProfile } from "../api/authAPI";
-import { setMessage } from "../features/messageSlice";
+// import { setMessage } from "../features/messageSlice";
 import Cookies from "js-cookie";
 
 const TOKEN_KEY = "_t4gd-*-";
@@ -19,7 +19,7 @@ function isAuthenticated() {
 }
 
 function getToken() {
-    return Cookies.get("access-token") || localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem("access-token");
 }
 
 async function getUser(token) {
@@ -31,13 +31,14 @@ async function login({ username, password, rememberMe }) {
     const { token, user } = await signin({ username, password });
     Cookies.set("access-token", token.access, {
         path: "/",
-        expires: new Date().setDate(new Date().getDate() + 1),
+        expires: 1,
     });
     Cookies.set("refresh-token", token.refresh, {
         path: "/",
-        expires: new Date().setDate(new Date().getDate() + 2),
+        expires: 5,
     });
     if (rememberMe) {
+        localStorage.setItem("access-token", token.access);
         localStorage.setItem(TOKEN_KEY, token.refresh);
     }
     return { token, user };
