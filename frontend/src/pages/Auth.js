@@ -63,13 +63,13 @@ const Auth = () => {
             <div className="flex flex-col justify-center items-center my-9">
                 <div title="buttons" className="flex flex-row">
                     <button
-                        className="bg-[#98FF9D] flex justify-center items-center px-20 py-7 rounded-l-xl relative"
+                        className="bg-[#98FF9D] flex justify-center items-center lg:px-20 px-9 lg:py-7 py-3 rounded-l-xl relative"
                         onClick={switchtoLogin}
                     >
                         <img
                             src={Weed1Black}
                             alt="weed"
-                            className="h-12 absolute -left-4 rotate-90"
+                            className="lg:h-12 h-6 absolute lg:-left-4 -left-2 rotate-90"
                         />
                         <h1 className="text-md md:text-lg lg:text-3xl text-black md:font-black">
                             Login
@@ -77,7 +77,7 @@ const Auth = () => {
                     </button>
 
                     <button
-                        className="bg-[#FFA800] flex justify-center items-center px-20 py-7 rounded-r-xl relative"
+                        className="bg-[#FFA800] flex justify-center items-center lg:px-20 px-9 lg:py-7 py-3 rounded-r-xl relative"
                         onClick={switchtoSignUp}
                     >
                         <h1 className="text-md md:text-lg lg:text-3xl text-black md:font-black">
@@ -86,7 +86,7 @@ const Auth = () => {
                         <img
                             src={Weed1Black}
                             alt="weed"
-                            className="h-12 absolute -right-4 -rotate-90"
+                            className="lg:h-12 h-6 absolute lg:-right-4 -right-2 -rotate-90"
                         />
                     </button>
                 </div>

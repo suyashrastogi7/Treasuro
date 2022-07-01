@@ -34,7 +34,7 @@ export function signup(data) {
     });
 }
 
-export function getProfile({ token }) {
+export function getProfile(token) {
     return new Promise(async (resolve, reject) => {
         let config = {
             headers: {

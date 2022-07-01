@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 
-import {
-    gpay,
-    paytm,
-    scantopay,
-    Weed1Yellow,
-    Arrow,
-} from "../components/AssetsExport";
+import { Weed1Yellow, Arrow } from "../components/AssetsExport";
 
 async function loadSDK() {
     return new Promise(function (resolve) {
@@ -29,11 +23,8 @@ async function loadSDK() {
 
 const Payments = () => {
     const navigate = useNavigate();
-    const [paymentMethod, setPaymentMethod] = useState({
-        paytm: false,
-        gpay: false,
-        qr: false,
-    });
+    const access = useSelector((state) => state.signin.token);
+    const { name } = useSelector((state) => state.signin.loggedInUser);
     async function displayRazorpay() {
         const res = await loadSDK();
         if (!res) {
@@ -42,62 +33,61 @@ const Payments = () => {
         }
         let config = {
             headers: {
-                Authorization:
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJiMDg3NDU5MjUxZjkyNDRjN2U5ZmY5In0sImlhdCI6MTY1NjAxNTA3NiwiZXhwIjoxNjU2MTAxNDc2fQ.NxKb5Zqz9HLiwEkzRchVVB7tPz6wXm4MwbitFx_3iqw",
+                Authorization: `Bearer ${access}`,
+                "Content-Type": "application/json",
             },
         };
-        const result = await axios.post(
-            "http://localhost:5000/api/payment/createorders",
+        const result = await axios.get(
+            "http://localhost:5000/api/payment/createorder",
             config
         );
+        console.log(result);
         if (!result) {
             alert("Server error. Are you online?");
             return;
         }
 
-        const { amount, id: order_id, currency } = result.data;
+        const { amount, orderId, username } = result.data.order;
 
         const options = {
-            key: "rzp_test_r6FiJfddJh76SI",
+            key: "rzp_test_1mxWSfdffc4Ize",
             amount: amount.toString(),
-            currency: currency,
+            currency: "INR",
             name: "Treasuro 2022",
-            description: "Ticket Purchase",
-            order_id: order_id,
+            description: `Ticket Purchase by ${username}`,
+            order_id: orderId,
             handler: async function (response) {
                 const data = {
-                    orderCreationId: order_id,
+                    orderCreationId: orderId,
                     razorpay_payment_id: response.razorpay_payment_id,
                     razorpay_order_id: response.razorpay_order_id,
                     razorpay_signature: response.razorpay_signature,
                 };
-
-                const result = await axios.post(
-                    "http://localhost:5000/api/payment/verifypayment",
-                    data,
-                    config
-                );
-                if (result.data.success) {
-                    //payment success, send to tickets page
-                    navigate("/tickets");
-                } else {
-                    //payment failure, show error page
-                    navigate("/error");
+                try {
+                    const result = await axios.post(
+                        "http://localhost:5000/api/payment/verifypayment",
+                        data,
+                        config
+                    );
+                    console.log(result);
+                    if (result.data.success) {
+                        //payment success, send to tickets page
+                        navigate("/tickets", { replace: true });
+                    }
+                } catch (err) {
+                    console.log(err.response.data);
+                    // navigate("/error", { replace: true });
                 }
             },
             prefill: {
-                name: "Soumya Dey",
-                email: "SoumyaDey@example.com",
-                contact: "9999999999",
+                name: "MMIL",
+                email: "suyash.rastogi01@gmail.com",
+                contact: "8299688077",
             },
             notes: {
-                address: "Soumya Dey Corporate Office",
-            },
-            theme: {
-                color: "#61dafb",
+                address: "MMIL, JSS Academy Of Technical Education, Noida",
             },
         };
-
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
     }
@@ -105,79 +95,28 @@ const Payments = () => {
     return (
         <Template>
             <TitleDash title="Payments" />
-            <p className="text-white my-7 text-xl">
-                Choose payment method below:
+            <p className="text-white my-7 text-xl font-bold">
+                Proceed to Pay :
             </p>
-            <div className="flex justify-around items-center">
-                <button
-                    className={`${
-                        paymentMethod.gpay &&
-                        "border-4 border-solid border-[#F911BA] rounded-xl"
-                    } shadow-sm transition hover:-translate-y-1 ease-in-out hover:shadow-md`}
-                    onClick={(e) =>
-                        setPaymentMethod({
-                            ...{
-                                paytm: false,
-                                gpay: false,
-                                qr: false,
-                            },
-                            gpay: true,
-                        })
-                    }
-                >
-                    <img
-                        className="rounded-xl "
-                        src={gpay}
-                        alt="Payment Method Gpay"
-                    />
-                </button>
-                <button
-                    className={`${
-                        paymentMethod.paytm &&
-                        "border-4 border-solid border-[#F911BA] rounded-xl"
-                    } shadow-sm transition hover:-translate-y-1 ease-in-out hover:shadow-md`}
-                    onClick={(e) =>
-                        setPaymentMethod({
-                            ...{
-                                paytm: false,
-                                gpay: false,
-                                qr: false,
-                            },
-                            paytm: true,
-                        })
-                    }
-                >
-                    <img
-                        className="rounded-xl "
-                        src={paytm}
-                        alt="Payment Method Paytm"
-                    />
-                </button>
-            </div>
-            <p className="text-white my-4 text-xl text-center">OR</p>
-            <div className="flex justify-center items-center">
-                <button
-                    className={`${
-                        paymentMethod.qr &&
-                        "border-4 border-solid border-[#F911BA] rounded-xl"
-                    } shadow-sm transition hover:-translate-y-1 ease-in-out hover:shadow-md`}
-                    onClick={(e) =>
-                        setPaymentMethod({
-                            ...{
-                                paytm: false,
-                                gpay: false,
-                                qr: false,
-                            },
-                            qr: true,
-                        })
-                    }
-                >
-                    <img
-                        className="rounded-xl "
-                        src={scantopay}
-                        alt="Payment Method Scan To pay"
-                    />
-                </button>
+            <div>
+                <h1 className="text-white my-3 text-xl font-semibold">
+                    Amount :{" "}
+                    <span className="text-white my-3 text-xl font-normal ml-4">
+                        ₹50
+                    </span>
+                </h1>
+                <h1 className="text-white my-3 text-xl font-semibold">
+                    Attempts :{" "}
+                    <span className="text-white my-3 text-xl font-normal ml-4">
+                        3
+                    </span>
+                </h1>
+                <h1 className="text-white my-3 text-xl font-semibold">
+                    Name :{" "}
+                    <span className="text-white my-3 text-xl font-normal ml-4">
+                        {name}
+                    </span>
+                </h1>
             </div>
             <div className="flex justify-end items-end mt-auto h-36">
                 <img
@@ -186,10 +125,10 @@ const Payments = () => {
                     alt="weed"
                 />
                 <button
-                    onClick={() => displayRazorpay}
-                    className="flex justify-between items-center cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 bg-hot-pink font-semibold"
+                    onClick={() => displayRazorpay()}
+                    className="flex justify-between items-center hover:shadow-lg cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 bg-hot-pink font-semibold"
                 >
-                    <span className="mr-3 text-white">Proceed</span>
+                    <span className="mr-3 text-white">Make Payment</span>
                     <img src={Arrow} alt="arrow" />
                 </button>
             </div>

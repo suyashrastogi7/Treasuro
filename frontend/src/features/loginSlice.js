@@ -8,7 +8,6 @@ export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
             if (auth.isAuthenticated()) {
                 const token = auth.getToken();
                 const { user } = await auth.getUser(token);
-                console.log(user);
                 return resolve({ token, user });
             }
         } catch (err) {
@@ -91,7 +90,7 @@ export const signinSlice = createSlice({
             Object.assign(state, {
                 ...initialState,
                 loading: false,
-                token: payload,
+                token: payload.access,
             });
         },
         [renewToken.rejected]: receiveError,

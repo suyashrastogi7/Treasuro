@@ -57,7 +57,11 @@ const Leaderboard = () => {
             <div className="flex justify-between align-start">
                 <TitleDash title="leaderboard" />
                 <button onClick={() => setRefresh((prev) => !prev)}>
-                    <img src={Refresh} alt="refresh" className="h-12 w-12" />
+                    <img
+                        src={Refresh}
+                        alt="refresh"
+                        className="lg:h-12 lg:w-12 w-8 h-8"
+                    />
                 </button>
             </div>
             <div className="flex mt-12 mb-6 text-lg font-black text-white md:text-xl">

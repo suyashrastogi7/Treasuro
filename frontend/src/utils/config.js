@@ -21,12 +21,15 @@ const requestHandler = (request) => {
 };
 
 const responseHandler = async (response) => {
+    const refreshToken = Cookies.get("refresh-token");
     if (response.status === 401) {
         // Refresh token
         const { token } = await axios.post(
-            "http://localhost:5000/api/auth/refresh"
+            "http://localhost:5000/api/auth/refresh",
+            { refresh: refreshToken }
         );
-        Cookies.set("access-token", token);
+        Cookies.set("access-token", token.access);
+        Cookies.set("refresh-token", token.refresh);
     }
 
     return response;
