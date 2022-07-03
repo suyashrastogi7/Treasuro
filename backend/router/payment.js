@@ -6,7 +6,6 @@ const {
     createOrder,
     verifyPayment,
 } = require("../controllers/payment.controller");
-const requireLogin = require("../middlewares/requireLogin");
 
 /**
  * @route   GET /api/payment/createorder
@@ -14,39 +13,28 @@ const requireLogin = require("../middlewares/requireLogin");
  * @desc    Creates a razorpay order for payment
  */
 
-router.get(
-    "/createorder",
-    [
-        check("username", "username is required").not().isEmpty(),
-        check("currency", "currency is required").not().isEmpty(),
-        check("amount", "amount is required").not().isEmpty(),
-    ],
-    requireLogin,
-    createOrder
-);
+router.get("/createorder", createOrder);
 
 /**
- * @route   POST /api/payment/create-order
+ * @route   POST /api/payment/verifypayment
  * @access  Public
  * @desc    Creates a razorpay order for payment
  */
 
 router.post(
     "/verifypayment",
-    [
-        check("username", "username is required").not().isEmpty(),
-        check("orderId", "orderId is required").not().isEmpty(),
-        check("razorpay_payment_id", "razorpay_payment_id is required")
-            .not()
-            .isEmpty(),
-        check("razorpay_order_id", "razorpay_order_id is required")
-            .not()
-            .isEmpty(),
-        check("razorpay_signature", "razorpay_signature is required")
-            .not()
-            .isEmpty(),
-    ],
-    requireLogin,
+    // [
+    //     check("orderId", "orderId is required").not().isEmpty(),
+    //     check("razorpay_payment_id", "razorpay_payment_id is required")
+    //         .not()
+    //         .isEmpty(),
+    //     check("razorpay_order_id", "razorpay_order_id is required")
+    //         .not()
+    //         .isEmpty(),
+    //     check("razorpay_signature", "razorpay_signature is required")
+    //         .not()
+    //         .isEmpty(),
+    // ],
     verifyPayment
 );
 

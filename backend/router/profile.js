@@ -5,9 +5,9 @@ const requireLogin = require("../middlewares/requireLogin");
 
 // controllers
 const {
-  getProfile,
-  //   editUser,
-  //   deleteProfile,
+    getProfile,
+    //   editUser,
+    //   deleteProfile,
 } = require("../controllers/profile.controller");
 
 /**
@@ -15,6 +15,6 @@ const {
  * @access  private
  * @desc    get user profile if logged in
  */
-router.get("/getuser", requireLogin, getProfile);
+router.get("/getuser", getProfile);
 
 module.exports = router;

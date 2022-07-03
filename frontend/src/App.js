@@ -10,6 +10,7 @@ import Tickets from "./pages/Ticket";
 import Success from "./pages/Success";
 import Payment from "./pages/Payments";
 import Question from "./pages/Question";
+import Profile from "./pages/Profile";
 import Rules from "./pages/Rules";
 
 const App = () => {
@@ -51,6 +52,14 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                             <Payment />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <Profile />
                         </ProtectedRoute>
                     }
                 />

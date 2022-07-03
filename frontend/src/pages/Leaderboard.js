@@ -24,6 +24,7 @@ const Leaderboard = () => {
                     "http://localhost:5000/api/leaderboard/",
                     config
                 );
+                console.log(data);
                 setData(data);
             } catch (err) {
                 console.log(err);

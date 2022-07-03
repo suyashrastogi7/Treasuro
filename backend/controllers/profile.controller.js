@@ -10,21 +10,25 @@ const getProfile = async (req, res) => {
         const user = await User.findOne({
             _id: id,
         });
-        res.status(200).json({
-            user: {
-                name: user.name,
-                username: user.username,
-                email: user.email,
-                rollno: user.rollno,
-                phoneno: user.phoneno,
-                attempts: user.attempts,
-                active: user.active,
-                score: user.score,
-                level: user.level,
-                image: user.image,
-            },
-        });
+        if (user) {
+            res.status(200).json({
+                user: {
+                    name: user.name,
+                    username: user.username,
+                    email: user.email,
+                    rollno: user.rollno,
+                    phoneno: user.phoneno,
+                    attempts: user.attempts,
+                    active: user.active,
+                    score: user.score,
+                    level: user.level,
+                    image: user.image,
+                },
+            });
+        }
+        res.status(401);
     } catch (error) {
+        console.log(error);
         showError(error, res);
     }
 };

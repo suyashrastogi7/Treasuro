@@ -5,7 +5,7 @@ const paymentSchema = new mongoose.Schema(
         username: {
             type: String,
             required: true,
-            unique: true,
+            unique: false,
         },
         orderId: {
             type: String,
@@ -14,6 +14,7 @@ const paymentSchema = new mongoose.Schema(
         razorpay_payment_id: {
             type: String,
             required: true,
+            unique: true,
         },
         razorpay_order_id: {
             type: String,
