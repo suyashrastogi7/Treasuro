@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Arrow, Cross, Hamburger, LogoWhite } from "../AssetsExport";
 import { useDispatch, useSelector } from "react-redux";
 import NavLinks from "./NavLinks";
@@ -7,7 +7,9 @@ import { logout } from "../../features/loginSlice";
 
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
+    const [show, setShow] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { loggedInUser, loggedIn } = useSelector((state) => state.signin);
     useEffect(() => {
         document.body.style.overflowY = showMenu ? "hidden" : "auto";
@@ -26,8 +28,12 @@ const Navbar = () => {
             </div>
             <div className="hidden lg:block">
                 {loggedIn ? (
-                    <div>
-                        <button className="flex relative justify-between items-center cursor-pointer rounded-full px-3 py-2 md:px-6 md:py-2 bg-hot-pink hover:opacity-90 font-semibold">
+                    <div
+                        onMouseOver={() => setShow(true)}
+                        onMouseLeave={() => setShow(false)}
+                        className="relative"
+                    >
+                        <button className="flex justify-between items-center cursor-pointer rounded-full px-3 py-2 md:px-6 md:py-2 bg-hot-pink  font-semibold">
                             <img
                                 src={loggedInUser?.image}
                                 className="rounded-full h-8 w-8"
@@ -35,13 +41,27 @@ const Navbar = () => {
                             />
                             <span className="ml-3">{loggedInUser?.name}</span>
                         </button>
-                        <button
-                            onClick={() => {
-                                dispatch(logout());
-                            }}
+                        <div
+                            className={`${
+                                show ? "" : "hidden"
+                            } bg-hot-pink absolute rounded-b-lg left-6 pt-1`}
                         >
-                            Logout
-                        </button>
+                            <button
+                                onClick={() => navigate("/profile")}
+                                className="flex w-full justify-between rounded items-center px-12 text-white  bg-hot-pink  py-2 hover:bg-[#D90166]"
+                            >
+                                Profile
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    dispatch(logout());
+                                }}
+                                className="flex justify-between items-center px-12 text-white bg-hot-pink rounded hover:bg-[#D90166] py-2"
+                            >
+                                Logout
+                            </button>
+                        </div>
                     </div>
                 ) : (
                     <Link to="/signin">

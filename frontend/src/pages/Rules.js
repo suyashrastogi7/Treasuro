@@ -28,15 +28,15 @@ const Rules = () => {
                 </h1>
                 <p className="ml-3 text-lg text-white lg:w-4/5 w-full word-wrap">
                     Every level holds 10 points. After each wrong submission,
-                    the total points will get deducted by 2. For eg. 10 -> 8->
-                    6-> 4-> 2. Attempts Points 1st attempt correct answer 10
-                    points 2nd attempt correct answer 8 points 3rd attempt
-                    correct answer 6 points 4th attempt correct answer 4 points
-                    5th attempt correct answer 2 points Wrong answer 5th time
-                    Disqualified The maximum number of attempts for each level
-                    is 5. After 5 attempts, your account will be blocked. All
-                    the submissions of a level will be recorded in our DB so
-                    avoid guesswork and play fair.
+                    the total points will get deducted by 2. For eg. 10 8 6 4 2.
+                    Attempts Points 1st attempt correct answer 10 points 2nd
+                    attempt correct answer 8 points 3rd attempt correct answer 6
+                    points 4th attempt correct answer 4 points 5th attempt
+                    correct answer 2 points Wrong answer 5th time Disqualified
+                    The maximum number of attempts for each level is 5. After 5
+                    attempts, your account will be blocked. All the submissions
+                    of a level will be recorded in our DB so avoid guesswork and
+                    play fair.
                 </p>
                 <h1 className="text-xl text-white font-semibold mt-6">
                     Solutions :
