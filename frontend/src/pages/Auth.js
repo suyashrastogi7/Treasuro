@@ -6,11 +6,12 @@ import { alertActions } from "../features/alertSlice";
 import { Arrow, Weed1Black, DefaultUSer } from "../components/AssetsExport";
 import TitleDash from "../components/TitleDash";
 import Template from "../components/Template";
+import Loader from "../components/Loader";
 import Input from "../components/Input";
 
 const Auth = () => {
     const [active, setActive] = useState("Login");
-    const { loggedIn, signup } = useSelector((state) => state.signin);
+    const { loggedIn, signup, loading } = useSelector((state) => state.signin);
 
     const [formState, setFormState] = useState({
         username: "",
@@ -51,6 +52,7 @@ const Auth = () => {
     };
     return (
         <Template>
+            <Loader loading={loading} />
             <div>
                 <TitleDash title="LOGIN/SIGNUP" />
                 <p className="text-3xl md:text-[56px] text-yellow font-bold mt-12 mb-12">
@@ -241,7 +243,7 @@ const Auth = () => {
             );
         }
 
-        // navigate("/", { replace: true });
+        navigate("/", { replace: true });
     }
     async function handleOnClickSignup(event) {
         event.preventDefault();

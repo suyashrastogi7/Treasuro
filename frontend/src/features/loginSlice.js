@@ -28,7 +28,7 @@ export const register = createAsyncThunk("signup/register", auth.register);
 export const logout = createAsyncThunk("signout/logout", auth.logout);
 
 const initialState = {
-    loading: true,
+    loading: false,
     error: null,
     loggedIn: false,
     loggedInUser: null,
