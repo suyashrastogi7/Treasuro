@@ -35,6 +35,10 @@ import Cross from "../assets/icons/cross.svg";
 import Refresh from "../assets/icons/refresh.svg";
 import Coin from "../assets/icons/coin.png";
 import Qr from "../assets/icons/qr.svg";
+import Success from "../assets/icons/success.png";
+import Error from "../assets/icons/error.png";
+import Verified from "../assets/icons/verified.png";
+import Status from "../assets/icons/status.svg";
 
 import loaderAnimationData from "../assets/lottie/loader.json";
 
@@ -76,4 +80,8 @@ export {
     DefaultUSer,
     Coin,
     Qr,
+    Success,
+    Error,
+    Verified,
+    Status,
 };

@@ -8,10 +8,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { answer, question } from "../features/questionSlice";
 
 import { Qr } from "../components/AssetsExport";
+import { alertActions } from "../features/alertSlice";
 
 const Question = () => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.signin.token);
+    const { success, message } = useSelector((state) => state.question);
 
     useEffect(() => {
         dispatch(question(token));
@@ -44,6 +46,12 @@ const Question = () => {
                             if (!!result) {
                                 setData(result?.text);
                                 dispatch(answer(token, data));
+                                dispatch(
+                                    alertActions.createAlert({
+                                        status: success,
+                                        message: message.message,
+                                    })
+                                );
                             }
 
                             if (!!error) {

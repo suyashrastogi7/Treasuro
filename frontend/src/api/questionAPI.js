@@ -35,9 +35,9 @@ export function postAnswer(token, data) {
                 config,
                 data
             );
-            const { success } = response.data;
-            console.log(success);
-            return resolve({ success });
+            const { success, msg } = response.data;
+            console.log(success, msg);
+            return resolve({ success, msg });
         } catch (err) {
             console.log(err);
             return reject(err);

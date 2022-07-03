@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Arrow, Cross, Hamburger, LogoWhite } from "../AssetsExport";
 import { useDispatch, useSelector } from "react-redux";
+import { alertActions } from "../../features/alertSlice";
 import NavLinks from "./NavLinks";
 import { logout } from "../../features/loginSlice";
 
@@ -56,6 +57,13 @@ const Navbar = () => {
                             <button
                                 onClick={() => {
                                     dispatch(logout());
+                                    dispatch(
+                                        alertActions.createAlert({
+                                            message:
+                                                "Logged Out Successfully 🤗",
+                                            status: "success",
+                                        })
+                                    );
                                 }}
                                 className="flex justify-between items-center px-12 text-white bg-hot-pink rounded hover:bg-[#D90166] py-2"
                             >
