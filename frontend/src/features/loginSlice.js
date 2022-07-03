@@ -33,6 +33,7 @@ const initialState = {
     loggedIn: false,
     loggedInUser: null,
     token: null,
+    signup: false,
 };
 
 export const signinSlice = createSlice({
@@ -58,6 +59,7 @@ export const signinSlice = createSlice({
         [register.fulfilled]: (state) => {
             Object.assign(state, {
                 loading: false,
+                signup: true,
             });
         },
         [register.rejected]: receiveError,

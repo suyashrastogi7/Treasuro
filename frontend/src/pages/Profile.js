@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 import Detail from "../components/Detail";
+import { Verified } from "../components/AssetsExport";
 
 const Profile = () => {
     const user = useSelector((state) => state.signin.loggedInUser);
@@ -12,6 +13,13 @@ const Profile = () => {
         <Template>
             <div className="flex">
                 <TitleDash title="My Profile" />
+                {user.verified && (
+                    <img
+                        src={Verified}
+                        alt="verified_profile"
+                        className="h-8 w-8 ml-3"
+                    />
+                )}
             </div>
             <div className="mt-12 flex justify-between">
                 <div>

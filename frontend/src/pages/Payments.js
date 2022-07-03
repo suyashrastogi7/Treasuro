@@ -38,7 +38,7 @@ const Payments = () => {
             },
         };
         const result = await axios.get(
-            "http://localhost:5000/api/payment/createorder",
+            `${process.env.REACT_APP_URL}api/payment/createorder`,
             config
         );
         console.log(result);
@@ -65,7 +65,7 @@ const Payments = () => {
                 };
                 try {
                     const result = await axios.post(
-                        "http://localhost:5000/api/payment/verifypayment",
+                        `${process.env.REACT_APP_URL}api/payment/verifypayment`,
                         data,
                         config
                     );

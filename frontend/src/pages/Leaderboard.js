@@ -21,7 +21,7 @@ const Leaderboard = () => {
                     },
                 };
                 const { data } = await axios.get(
-                    "http://localhost:5000/api/leaderboard/",
+                    `${process.env.REACT_APP_URL}api/leaderboard/`,
                     config
                 );
                 console.log(data);

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../features/loginSlice";
+import { alertActions } from "../features/alertSlice";
 import { Arrow, Weed1Black, DefaultUSer } from "../components/AssetsExport";
 import TitleDash from "../components/TitleDash";
 import Template from "../components/Template";
@@ -9,6 +10,7 @@ import Input from "../components/Input";
 
 const Auth = () => {
     const [active, setActive] = useState("Login");
+    const { loggedIn, signup } = useSelector((state) => state.signin);
 
     const [formState, setFormState] = useState({
         username: "",
@@ -223,13 +225,44 @@ const Auth = () => {
     async function handleOnClick(event) {
         event.preventDefault();
         dispatch(login(formState));
-        navigate("/", { replace: true });
+        if (loggedIn) {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Signed In Successfully 🤗",
+                    status: "success",
+                })
+            );
+        } else {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Error While Signin",
+                    status: "error",
+                })
+            );
+        }
+
+        // navigate("/", { replace: true });
     }
     async function handleOnClickSignup(event) {
         event.preventDefault();
         console.log(signState);
         dispatch(register(signState));
-        navigate("/success", { replace: true });
+        if (signup) {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Signed Up Successfully 🤗",
+                    status: "success",
+                })
+            );
+            navigate("/success", { replace: true });
+        } else {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Error While Signin",
+                    status: "error",
+                })
+            );
+        }
     }
 };
 

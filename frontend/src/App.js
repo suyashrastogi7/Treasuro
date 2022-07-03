@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/Protected";
 import Home from "./pages/Home";
 import Leaderboard from "./pages/Leaderboard";
 import Auth from "./pages/Auth";
+
 import Tickets from "./pages/Ticket";
 import Success from "./pages/Success";
 import Payment from "./pages/Payments";

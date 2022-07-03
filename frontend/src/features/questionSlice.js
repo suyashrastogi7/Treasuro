@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 import { getQuestion, postAnswer } from "../api/questionAPI";
 
 const initialState = {
     level: 0,
     question: "",
     success: false,
+    message: "",
 };
 
 export const question = createAsyncThunk("question/get", getQuestion);
@@ -34,6 +34,7 @@ const questionSlice = createSlice({
                 ...initialState,
                 loading: false,
                 success: payload.success,
+                message: payload.message,
             });
         },
         [answer.rejected]: receiveError,
@@ -43,14 +44,14 @@ const questionSlice = createSlice({
 function startLoading(state) {
     Object.assign(state, {
         loading: true,
-        error: null,
+        message: null,
     });
 }
 
 function receiveError(state, action) {
     Object.assign(state, {
         loading: false,
-        error: action.error,
+        message: action.error,
     });
 }
 
