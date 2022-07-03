@@ -7,8 +7,7 @@ const shortid = require("shortid");
 const Order = require("../models/order_schema");
 const User = require("../models/user_schema");
 const Payment = require("../models/payment_schema");
-
-const { purchaseTicket } = require("./ticket.controller");
+const Ticket = require("../models/ticket_schema");
 
 let instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -22,8 +21,9 @@ const createOrder = async (req, res, next) => {
         const user = await User.findOne({
             _id: id,
         });
+        console.log(user);
         const options = {
-            amount: 4000,
+            amount: 100,
             currency: "INR",
             receipt: shortid.generate(),
             notes: {
@@ -33,11 +33,11 @@ const createOrder = async (req, res, next) => {
         const data = await instance.orders.create(options);
         console.log(data);
         const order = new Order({
-            username: user.username,
+            username: data.notes.username,
             orderId: data.id,
             amount: data.amount,
         });
-        order.save();
+        await order.save();
         return res.status(200).json({
             order,
             message: "Order created successfully",
@@ -48,6 +48,19 @@ const createOrder = async (req, res, next) => {
 };
 
 const verifyPayment = async (req, res) => {
+    function makeid(length) {
+        var result = "";
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(
+                Math.floor(Math.random() * charactersLength)
+            );
+        }
+        var val = Math.floor(1000 + Math.random() * 9000);
+        result += `-${val}`;
+        return result;
+    }
     try {
         // getting the details back from our font-end
         const {
@@ -56,16 +69,25 @@ const verifyPayment = async (req, res) => {
             razorpay_order_id,
             razorpay_signature,
         } = req.body;
-
+        console.log(
+            orderCreationId,
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature
+        );
         const token = req.headers.authorization.split(" ")[1];
         const id = jwt.decode(token)?.user.id;
         const user = await User.findOne({
             _id: id,
         });
+        console.log(user);
         // Creating our own digest
         // The format should be like this:
         // digest = hmac_sha256(orderCreationId + "|" + razorpay_payment_id, secret);
-        const shasum = crypto.createHmac("sha256", "w2lBtgmeuDUfnJVp43UpcaiT");
+        const shasum = crypto.createHmac(
+            "sha256",
+            process.env.RAZORPAY_KEY_SECRET
+        );
 
         shasum.update(`${orderCreationId}|${razorpay_payment_id}`);
 
@@ -91,7 +113,20 @@ const verifyPayment = async (req, res) => {
             razorpay_signature,
         });
         payment.save();
-
+        user.attempts += 3;
+        const ticket = makeid(4);
+        const _ticket = new Ticket({
+            ticketID: ticket,
+            payment: {
+                verified: true,
+                paymentId: razorpay_payment_id,
+            },
+            userID: user._id,
+        });
+        await _ticket.save();
+        const _createdTicket = await Ticket.findOne({ ticketID: ticket });
+        user.ticketsPurchased.push(_createdTicket.id);
+        await user.save();
         res.status(200).json({
             msg: "success",
             orderId: razorpay_order_id,

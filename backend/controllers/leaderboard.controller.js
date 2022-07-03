@@ -7,7 +7,7 @@ const getLeaderboard = async (req, res) => {
     try {
         const leaderboard = await User.find({});
         const leaderboardTruncate = leaderboard.map((user) => ({
-            name: user.name,
+            name: user.username,
             pts: user.score,
             username: user.username,
         }));
@@ -26,8 +26,8 @@ const getLeaderboard = async (req, res) => {
             if (el.username === user.username) return idx + 1;
         });
         const mine = {
-            pos: _my_position[1],
-            name: user.name,
+            pos: _my_position,
+            name: user.username,
             pts: user.score,
         };
         return res.status(200).json({ leaderboard: leaderboardTruncate, mine });
