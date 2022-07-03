@@ -1,30 +1,36 @@
-import React, { useState } from "react";
-// import axios from "../utils/config";
+import React, { useState, useEffect } from "react";
 import { QrReader } from "react-qr-reader";
 
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 
+import { useSelector, useDispatch } from "react-redux";
+import { answer, question } from "../features/questionSlice";
+
 import { Qr } from "../components/AssetsExport";
 
 const Question = () => {
-    // const res = await axios.get('/api/questions/resume');
-    // const question = res.data;
+    const dispatch = useDispatch();
+    const token = useSelector((state) => state.signin.token);
+
+    useEffect(() => {
+        dispatch(question(token));
+    }, [token, dispatch]);
+
+    const getQuestion = useSelector((state) => state.question);
+
     const [data, setData] = useState("No result");
     const [openHandler, setOpenHandler] = useState(false);
-    const question = {
-        serial: 1,
-        text: "What is the amount of time required to answer this question",
-    };
+
     function openQR() {
         setOpenHandler(true);
     }
     return (
         <Template>
-            <TitleDash title={`Question ${question.serial}`} />
+            <TitleDash title={`Question ${getQuestion.level}`} />
             <div className="mt-20 flex flex-col justify-center items-center">
                 <h1 className="text-white lg:text-5xl text-3xl font-bold lg:w-3/5 w-full text-center tracking-wider selection:text-{#FFC800} selection:bg-{#FFC800}">
-                    {question.text} ?
+                    {getQuestion.question} ?
                 </h1>
                 <p className="text-white text-xl my-8">Scan QR to answer : </p>
             </div>
@@ -37,6 +43,7 @@ const Question = () => {
                         onResult={(result, error) => {
                             if (!!result) {
                                 setData(result?.text);
+                                dispatch(answer(token, data));
                             }
 
                             if (!!error) {

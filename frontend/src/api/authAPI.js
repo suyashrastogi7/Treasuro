@@ -5,7 +5,7 @@ export function signin({ username, password }) {
         try {
             const emailOrUsername = username;
             const response = await axios.post(
-                "http://localhost:5000/api/auth/signin",
+                `${process.env.REACT_APP_URL}api/auth/signin`,
                 { emailOrUsername, password }
             );
             const { token, user } = response.data;
@@ -21,7 +21,7 @@ export function signup(data) {
     return new Promise(async (resolve, reject) => {
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/auth/signup",
+                `${process.env.REACT_APP_URL}api/auth/signup`,
                 data
             );
             const { token, user } = response.data;
@@ -43,7 +43,7 @@ export function getProfile(token) {
         };
         try {
             const response = await axios.get(
-                "http://localhost:5000/api/profile/getuser",
+                `${process.env.REACT_APP_URL}api/profile/getuser`,
                 config
             );
             const { user } = response.data;
@@ -59,7 +59,7 @@ export function renewAccess(refresh) {
     return new Promise(async (resolve, reject) => {
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/auth/refresh",
+                `${process.env.REACT_APP_URL}api/auth/refresh`,
                 {
                     refresh: refresh,
                 }
