@@ -41,6 +41,9 @@ async function login({ username, password, rememberMe }) {
         localStorage.setItem("access-token", token.access);
         localStorage.setItem(TOKEN_KEY, token.refresh);
     }
+    setTimeout(() => {
+        console.log("loader test");
+    }, 3000);
     return { token, user };
 }
 

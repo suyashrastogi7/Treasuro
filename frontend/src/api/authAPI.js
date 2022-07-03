@@ -9,6 +9,7 @@ export function signin({ username, password }) {
                 { emailOrUsername, password }
             );
             const { token, user } = response.data;
+            setTimeout(() => {}, 3000);
             return resolve({ token, user });
         } catch (err) {
             console.log(err);

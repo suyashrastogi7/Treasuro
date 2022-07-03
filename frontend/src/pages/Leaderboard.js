@@ -6,9 +6,11 @@ import { Refresh } from "../components/AssetsExport";
 import RankRow from "../components/RankRow";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
+import Loader from "../components/Loader";
 
 const Leaderboard = () => {
     const [data, setData] = useState();
+    const [loading, setLoading] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const { access } = useSelector((state) => state.signin.token);
 
@@ -26,6 +28,7 @@ const Leaderboard = () => {
                 );
                 console.log(data);
                 setData(data);
+                setLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -55,9 +58,15 @@ const Leaderboard = () => {
 
     return (
         <Template>
+            <Loader loading={loading} />
             <div className="flex justify-between align-start">
                 <TitleDash title="leaderboard" />
-                <button onClick={() => setRefresh((prev) => !prev)}>
+                <button
+                    onClick={() => {
+                        setRefresh((prev) => !prev);
+                        setLoading(true);
+                    }}
+                >
                     <img
                         src={Refresh}
                         alt="refresh"
