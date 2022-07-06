@@ -143,6 +143,7 @@ const signIn = async (req, res) => {
                 score: user.score,
                 level: user.level,
                 image: user.image,
+                verified: user.verified,
             },
             token,
         });

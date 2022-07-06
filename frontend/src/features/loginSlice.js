@@ -9,6 +9,8 @@ export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
                 const token = auth.getToken();
                 const { user } = await auth.getUser(token);
                 return resolve({ token, user });
+            } else {
+                reject({ token: null, user: null });
             }
         } catch (err) {
             return reject({ token: null, user: null });
