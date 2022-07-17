@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
-import axios from "../utils/config";
+import { AxiosPrivate } from "../utils/config";
 import { Refresh } from "../components/AssetsExport";
 import RankRow from "../components/RankRow";
 import Template from "../components/Template";
@@ -22,7 +22,7 @@ const Leaderboard = () => {
                         Authorization: `Bearer ${access}`,
                     },
                 };
-                const { data } = await axios.get(
+                const { data } = await AxiosPrivate.get(
                     `${process.env.REACT_APP_URL}api/leaderboard/`,
                     config
                 );

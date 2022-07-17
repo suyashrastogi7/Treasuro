@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login, register } from "../features/loginSlice";
+import { login, register, checkAuth } from "../features/loginSlice";
 import { alertActions } from "../features/alertSlice";
 import { Arrow, Weed1Black, DefaultUSer } from "../components/AssetsExport";
 import TitleDash from "../components/TitleDash";
 import Template from "../components/Template";
 import Loader from "../components/Loader";
 import Input from "../components/Input";
+import Cookies from "js-cookie";
 
 const Auth = () => {
     const [active, setActive] = useState("Login");
-    const { loggedIn, signup, loading } = useSelector((state) => state.signin);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { loading } = useSelector((state) => state.signin);
 
     const [formState, setFormState] = useState({
         username: "",
@@ -28,8 +31,6 @@ const Auth = () => {
         image: DefaultUSer,
     });
 
-    const dispatch = useDispatch();
-
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -43,7 +44,59 @@ const Auth = () => {
         };
     };
 
-    const navigate = useNavigate();
+    function resetLogin() {
+        setFormState({
+            username: "",
+            password: "",
+            rememberMe: false,
+        });
+    }
+
+    async function HandleOnClick(event) {
+        event.preventDefault();
+        dispatch(login(formState));
+        const access = Cookies.get("access-token");
+        if (access) {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Signed In Successfully 🤗",
+                    status: "success",
+                })
+            );
+            navigate("/", { replace: true });
+        } else {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Error While Signin, Check your Credentials.",
+                    status: "error",
+                })
+            );
+            resetLogin();
+        }
+    }
+    async function HandleOnClickSignup(event) {
+        event.preventDefault();
+        console.log(signState);
+        dispatch(register(signState));
+        dispatch(checkAuth());
+        const { signup } = useSelector((state) => state.signin);
+        if (signup) {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Signed Up Successfully 🤗",
+                    status: "success",
+                })
+            );
+            navigate("/success", { replace: true });
+        } else {
+            dispatch(
+                alertActions.createAlert({
+                    message: "Error While Signup",
+                    status: "error",
+                })
+            );
+        }
+    }
     const switchtoLogin = () => {
         setActive("Login");
     };
@@ -126,7 +179,8 @@ const Auth = () => {
                             name="rememberMe"
                         />
                         <button
-                            onClick={handleOnClick}
+                            onClick={HandleOnClick}
+                            disabled={loading}
                             className="flex justify-between items-center cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 my-2 bg-hot-pink font-semibold"
                         >
                             <span className="mr-1 text-white">Login</span>
@@ -213,7 +267,8 @@ const Auth = () => {
                             </label>
                         </div>
                         <button
-                            onClick={handleOnClickSignup}
+                            onClick={HandleOnClickSignup}
+                            disabled={loading}
                             className="flex justify-between items-center cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 my-4 bg-hot-pink font-semibold"
                         >
                             <span className="mr-1 text-white">Sign Up</span>
@@ -224,48 +279,6 @@ const Auth = () => {
             </div>
         </Template>
     );
-    async function handleOnClick(event) {
-        event.preventDefault();
-        dispatch(login(formState));
-        if (loggedIn) {
-            dispatch(
-                alertActions.createAlert({
-                    message: "Signed In Successfully 🤗",
-                    status: "success",
-                })
-            );
-        } else {
-            dispatch(
-                alertActions.createAlert({
-                    message: "Error While Signin",
-                    status: "error",
-                })
-            );
-        }
-
-        navigate("/", { replace: true });
-    }
-    async function handleOnClickSignup(event) {
-        event.preventDefault();
-        console.log(signState);
-        dispatch(register(signState));
-        if (signup) {
-            dispatch(
-                alertActions.createAlert({
-                    message: "Signed Up Successfully 🤗",
-                    status: "success",
-                })
-            );
-            navigate("/success", { replace: true });
-        } else {
-            dispatch(
-                alertActions.createAlert({
-                    message: "Error While Signin",
-                    status: "error",
-                })
-            );
-        }
-    }
 };
 
 export default Auth;

@@ -1,17 +1,9 @@
-import axios from "../utils/config";
+import { AxiosPrivate } from "../utils/config";
 
-export function getQuestion(token) {
+export function getQuestion() {
     return new Promise(async (resolve, reject) => {
-        let config = {
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-        };
         try {
-            const response = await axios.get(
-                `${process.env.REACT_APP_URL}api/question/getone`,
-                config
-            );
+            const response = await AxiosPrivate.get(`/question/getone`);
             const { question, level } = response.data.question;
             console.log(question);
             return resolve({ level, question });
@@ -22,19 +14,10 @@ export function getQuestion(token) {
     });
 }
 
-export function postAnswer(token, data) {
+export function postAnswer(data) {
     return new Promise(async (resolve, reject) => {
-        let config = {
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-        };
         try {
-            const response = await axios.post(
-                `${process.env.REACT_APP_URL}api/question/ans`,
-                config,
-                data
-            );
+            const response = await AxiosPrivate.post(`/question/ans`, data);
             const { success, msg } = response.data;
             console.log(success, msg);
             return resolve({ success, msg });

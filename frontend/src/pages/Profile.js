@@ -13,7 +13,7 @@ const Profile = () => {
         <Template>
             <div className="flex">
                 <TitleDash title="My Profile" />
-                {user.verified && (
+                {user?.verified && (
                     <img
                         src={Verified}
                         alt="verified_profile"

@@ -1,18 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 import Ticket from "../components/Ticket";
 import { Link } from "react-router-dom";
 import { Coin } from "../components/AssetsExport";
 
-const data = [
-    { id: "KFER-3321", use: 3 },
-    { id: "AEFT-3571", use: 2 },
-    { id: "HTRG-2341", use: 1 },
-    { id: "WDWE-8724", use: 0 },
-];
-
 const Tickets = () => {
+    const tickets = useSelector((state) => state.signin.loggedInUser.tickets);
     return (
         <Template>
             <div>
@@ -31,11 +26,21 @@ const Tickets = () => {
                         </button>
                     </Link>
                 </div>
-                <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4 mt-9">
-                    {data.map((item, i) => {
-                        return <Ticket key={i} id={item.id} use={item.use} />;
-                    })}
-                </div>
+                {tickets?.length === 0 ? (
+                    <div>
+                        <h1 className="text-xl text-white mt-9">
+                            No Tickets Purchased yet.
+                        </h1>
+                    </div>
+                ) : (
+                    <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4 mt-9">
+                        {tickets?.map((item, i) => {
+                            return (
+                                <Ticket key={i} id={item.id} use={item.use} />
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </Template>
     );

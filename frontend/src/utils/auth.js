@@ -1,4 +1,4 @@
-import { signin, signup, renewAccess, getProfile } from "../api/authAPI";
+import { signin, signup, getProfile } from "../api/authAPI";
 // import { setMessage } from "../features/messageSlice";
 import Cookies from "js-cookie";
 
@@ -10,7 +10,6 @@ export const auth = {
     login,
     logout,
     register,
-    renewAccessToken,
     getUser,
 };
 
@@ -22,8 +21,8 @@ function getToken() {
     return localStorage.getItem("access-token");
 }
 
-async function getUser(token) {
-    const user = await getProfile(token);
+async function getUser() {
+    const user = await getProfile();
     return user;
 }
 
@@ -41,21 +40,18 @@ async function login({ username, password, rememberMe }) {
         localStorage.setItem("access-token", token.access);
         localStorage.setItem(TOKEN_KEY, token.refresh);
     }
-    setTimeout(() => {
-        console.log("loader test");
-    }, 3000);
     return { token, user };
 }
 
-async function renewAccessToken() {
-    try {
-        const refresh = Cookies.get("refresh-token");
-        const { token } = await renewAccess(refresh);
-        return Promise.resolve({ token });
-    } catch (err) {
-        return Promise.reject(err.response?.data?.msg);
-    }
-}
+// async function renewAccessToken() {
+//     try {
+//         const refresh = Cookies.get("refresh-token");
+//         const { token } = await renewAccess(refresh);
+//         return Promise.resolve({ token });
+//     } catch (err) {
+//         return Promise.reject(err.response?.data?.msg);
+//     }
+// }
 
 async function register(data) {
     try {

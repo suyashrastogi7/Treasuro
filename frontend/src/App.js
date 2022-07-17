@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./features/loginSlice";
 import { useEffect } from "react";
 import ProtectedRoute from "./components/Protected";
@@ -16,9 +16,10 @@ import Rules from "./pages/Rules";
 
 const App = () => {
     const dispatch = useDispatch();
+    const loggedInUser = useSelector((state) => state.signin.loggedInUser);
     useEffect(() => {
         dispatch(checkAuth());
-    }, [dispatch]);
+    }, [loggedInUser, dispatch]);
     return (
         <Router>
             <Routes>

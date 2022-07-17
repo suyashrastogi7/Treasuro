@@ -6,9 +6,8 @@ export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
     return new Promise(async (resolve, reject) => {
         try {
             if (auth.isAuthenticated()) {
-                const token = auth.getToken();
-                const { user } = await auth.getUser(token);
-                return resolve({ token, user });
+                const { user } = await auth.getUser();
+                return resolve({ user });
             } else {
                 reject({ token: null, user: null });
             }
@@ -45,14 +44,13 @@ export const signinSlice = createSlice({
     extraReducers: {
         [checkAuth.pending]: startLoading,
         [checkAuth.fulfilled]: (state, { payload }) => {
-            const { token = null, user = null } = payload;
+            const { user = null } = payload;
 
             Object.assign(state, {
                 loading: false,
                 error: null,
-                loggedIn: !!token,
+                loggedIn: true,
                 loggedInUser: user,
-                token,
             });
         },
         [checkAuth.rejected]: receiveError,
@@ -69,7 +67,8 @@ export const signinSlice = createSlice({
         [login.pending]: startLoading,
         [login.fulfilled]: (state, { payload }) => {
             const { user, token } = payload;
-            Object.assign(state, {
+            return Object.assign(state, {
+                ...initialState,
                 loading: false,
                 loggedIn: true,
                 loggedInUser: user,
