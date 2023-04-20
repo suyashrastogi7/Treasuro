@@ -124,9 +124,13 @@ const verifyPayment = async (req, res) => {
             userID: user._id,
         });
         await _ticket.save();
-        const _createdTicket = await Ticket.findOne({ ticketID: ticket });
-        user.ticketsPurchased.push(_createdTicket.id);
+        // User.findOneAndUpdate(
+        //     { username: user.username },
+        //     { $push: { tickets: { id: ticket } } }
+        // );
+        user.ticketsPurchased.tickets.push({ id: ticket });
         await user.save();
+        console.log(user);
         res.status(200).json({
             msg: "success",
             orderId: razorpay_order_id,
@@ -134,6 +138,7 @@ const verifyPayment = async (req, res) => {
             success: true,
         });
     } catch (error) {
+        console.log(error);
         res.status(500).send(error);
     }
 };

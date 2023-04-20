@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 const ticketSchema = new mongoose.Schema({
-    ticketID: { type: String, required: true },
+    ticketID: {
+        type: String,
+        required: true,
+    },
     payment: {
         verified: {
             type: Boolean,

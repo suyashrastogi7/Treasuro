@@ -53,7 +53,14 @@ export const signinSlice = createSlice({
                 loggedInUser: user,
             });
         },
-        [checkAuth.rejected]: receiveError,
+        [checkAuth.rejected]: (state, action) => {
+            Object.assign(state, {
+                loading: false,
+                error: action.error,
+            });
+            // window.location.replace(true);
+            // window.location.href = "/signin";
+        },
 
         [register.pending]: startLoading,
         [register.fulfilled]: (state) => {

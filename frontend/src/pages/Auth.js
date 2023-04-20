@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register, checkAuth } from "../features/loginSlice";
@@ -12,9 +12,11 @@ import Cookies from "js-cookie";
 
 const Auth = () => {
     const [active, setActive] = useState("Login");
+    const [submitted, setSubmitted] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading } = useSelector((state) => state.signin);
+    const { loggedIn } = useSelector((state) => state.signin);
 
     const [formState, setFormState] = useState({
         username: "",
@@ -44,19 +46,28 @@ const Auth = () => {
         };
     };
 
-    function resetLogin() {
+    function reset() {
         setFormState({
             username: "",
             password: "",
             rememberMe: false,
         });
+        setSignState({
+            name: "",
+            username: "",
+            password: "",
+            rollno: "",
+            email: "",
+            phoneno: "",
+            image: DefaultUSer,
+        });
     }
 
     async function HandleOnClick(event) {
         event.preventDefault();
+        setSubmitted(true);
         dispatch(login(formState));
-        const access = Cookies.get("access-token");
-        if (access) {
+        if (submitted && loggedIn) {
             dispatch(
                 alertActions.createAlert({
                     message: "Signed In Successfully 🤗",
@@ -71,7 +82,7 @@ const Auth = () => {
                     status: "error",
                 })
             );
-            resetLogin();
+            reset();
         }
     }
     async function HandleOnClickSignup(event) {
@@ -95,6 +106,7 @@ const Auth = () => {
                     status: "error",
                 })
             );
+            reset();
         }
     }
     const switchtoLogin = () => {
@@ -121,7 +133,9 @@ const Auth = () => {
                 <div title="buttons" className="flex flex-row">
                     <button
                         className="bg-[#98FF9D] flex justify-center items-center lg:px-20 px-9 lg:py-7 py-3 rounded-l-xl relative"
-                        onClick={switchtoLogin}
+                        onClick={() => {
+                            switchtoLogin();
+                        }}
                     >
                         <img
                             src={Weed1Black}

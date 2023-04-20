@@ -13,7 +13,7 @@ export const auth = {
     getUser,
 };
 
-function isAuthenticated() {
+function isAuthenticated() { 
     return !!getToken();
 }
 

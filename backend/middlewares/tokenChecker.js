@@ -1,8 +1,11 @@
 const jwt = require("jsonwebtoken");
+const { TokenExpiredError } = jwt;
 
 module.exports = (req, res, next) => {
     const token =
-        req.body.token || req.query.token || req.headers["x-access-token"];
+        req.headers.Authorization ||
+        req.query.token ||
+        req.headers["x-access-token"];
     // decode token
     if (token) {
         // verifies secret and checks exp
