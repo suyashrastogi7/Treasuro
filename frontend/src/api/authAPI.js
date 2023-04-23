@@ -3,56 +3,56 @@
 import axios from "axios";
 
 export function signin({ username, password }) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const emailOrUsername = username;
-			const response = await axios.post(
-				`http://localhost:5000/api/auth/signin`,
-				{
-					emailOrUsername,
-					password,
-				}
-			);
-			console.log(response);
-			const { token, user } = response.data;
-			return resolve({ token, user });
-		} catch (err) {
-			console.log("Error", err);
-			return reject(err);
-		}
-	});
+  return new Promise(async (resolve, reject) => {
+    try {
+      const emailOrUsername = username;
+      const response = await axios.post(
+        `http://192.168.0.115:5000/api/auth/signin`,
+        {
+          emailOrUsername,
+          password,
+        }
+      );
+      console.log(response);
+      const { token, user } = response.data;
+      return resolve({ token, user });
+    } catch (err) {
+      console.log("Error", err);
+      return reject(err);
+    }
+  });
 }
 
 export function signup(data) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const response = await axios.post(
-				`http://localhost:5000/api/auth/signup`,
-				data
-			);
-			const { success } = response.data;
-			console.log("Response ==> ", response);
-			return resolve({ success });
-		} catch (err) {
-			console.log(err);
-			return reject(err);
-		}
-	});
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/auth/signup`,
+        data
+      );
+      const { success } = response.data;
+      console.log("Response ==> ", response);
+      return resolve({ success });
+    } catch (err) {
+      console.log(err);
+      return reject(err);
+    }
+  });
 }
 
 export function getProfile() {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const response = await axios.get(
-				`http://localhost:5000/api/profile/getuser`
-			);
-			const { user } = response.data;
-			return resolve({ user });
-		} catch (err) {
-			console.log(err);
-			return reject(err);
-		}
-	});
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/profile/getuser`
+      );
+      const { user } = response.data;
+      return resolve({ user });
+    } catch (err) {
+      console.log(err);
+      return reject(err);
+    }
+  });
 }
 
 // export function renewAccess(refresh) {
