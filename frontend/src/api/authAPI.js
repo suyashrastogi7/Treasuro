@@ -15,7 +15,6 @@ export function signin({ username, password }) {
 			);
 			console.log(response);
 			const { token, user } = response.data;
-			setTimeout(() => {}, 3000);
 			return resolve({ token, user });
 		} catch (err) {
 			console.log("Error", err);
@@ -31,9 +30,9 @@ export function signup(data) {
 				`http://localhost:5000/api/auth/signup`,
 				data
 			);
-			const { token, user } = response.data;
+			const { success } = response.data;
 			console.log("Response ==> ", response);
-			return resolve({ token, user });
+			return resolve({ success });
 		} catch (err) {
 			console.log(err);
 			return reject(err);

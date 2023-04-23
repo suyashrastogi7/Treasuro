@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
-import axios from "../utils/config";
+import axios from "axios";
 import { Refresh } from "../components/AssetsExport";
 import RankRow from "../components/RankRow";
 import Template from "../components/Template";
@@ -23,10 +23,10 @@ const Leaderboard = () => {
 					},
 				};
 				const { data } = await axios.get(
-					`http://localhost:5000/api/leaderboard/`,
+					`http://localhost:5000/api/leaderboard`,
 					config
 				);
-				console.log(data);
+				console.log("Leaderboard ==> ", data);
 				setData(data);
 				setLoading(false);
 			} catch (err) {
