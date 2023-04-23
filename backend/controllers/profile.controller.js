@@ -5,7 +5,8 @@ const showError = require("../utils/showError.js");
 
 const getProfile = async (req, res) => {
     try {
-        const token = req.headers.authorization.split(" ")[1];
+        // const token = req.headers.authorization.split(" ")[1];
+        const token = req.decoded;
         const id = jwt.decode(token)?.user.id;
         const user = await User.findOne({
             _id: id,
@@ -16,6 +17,7 @@ const getProfile = async (req, res) => {
                     name: user.name,
                     username: user.username,
                     email: user.email,
+                    tickets: user.ticketsPurchased.tickets,
                     rollno: user.rollno,
                     phoneno: user.phoneno,
                     attempts: user.attempts,

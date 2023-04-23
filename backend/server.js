@@ -5,6 +5,8 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 
+const verifyToken = require("./middlewares/tokenChecker");
+
 const app = express();
 
 /** Middleware */
@@ -30,7 +32,7 @@ connectToDatabase().then(() => {
 
 /** Routes */
 app.use("/api/auth", require("./router/auth"));
-app.use("/api/profile", require("./router/profile"));
+app.use("/api/profile", verifyToken, require("./router/profile"));
 app.use("/api/question", require("./router/question"));
 app.use("/api/ticket", require("./router/ticket"));
 app.use("/api/leaderboard", require("./router/leaderboard"));

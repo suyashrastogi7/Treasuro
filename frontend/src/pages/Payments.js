@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { alertActions } from "../features/alertSlice";
+import { checkAuth } from "../features/loginSlice";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 
@@ -23,7 +25,8 @@ async function loadSDK() {
 
 const Payments = () => {
     const navigate = useNavigate();
-    const access = useSelector((state) => state.signin.token);
+    const dispatch = useDispatch();
+    const access = useSelector((state) => state.signin.token.access);
     const { name } = useSelector((state) => state.signin.loggedInUser);
     async function displayRazorpay() {
         const res = await loadSDK();
@@ -72,10 +75,24 @@ const Payments = () => {
                     console.log(result);
                     if (result.data.success) {
                         //payment success, send to tickets page
+                        dispatch(checkAuth());
+                        dispatch(
+                            alertActions.createAlert({
+                                message: "Payment Successfull. 🤗",
+                                status: "success",
+                            })
+                        );
                         navigate("/tickets", { replace: true });
                     }
                 } catch (err) {
                     console.log(err.response.data);
+                    dispatch(
+                        alertActions.createAlert({
+                            message:
+                                "Payment Failed, please retry with another method. 🤗",
+                            status: "failed",
+                        })
+                    );
                     // navigate("/error", { replace: true });
                 }
             },

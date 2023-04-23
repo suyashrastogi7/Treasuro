@@ -1,12 +1,20 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-const ProtectedRoute = ({ children }) => {
-    const { loggedIn } = useSelector((state) => state.signin);
-    if (!loggedIn) {
-        return <Navigate to="/signin" replace />;
-    }
+import { useSelector, useDispatch } from "react-redux";
+import { alertActions } from "../features/alertSlice";
 
-    return children;
+const ProtectedRoute = ({ children }) => {
+	const { loggedIn } = useSelector((state) => state.signin);
+	const dispatch = useDispatch();
+	if (!loggedIn) {
+		dispatch(
+			alertActions.createAlert({
+				message: "Sign in to Play 🤗",
+				status: "success",
+			})
+		);
+		// return <Navigate to="/signin" replace />;
+	}
+	return children;
 };
 
 export default ProtectedRoute;

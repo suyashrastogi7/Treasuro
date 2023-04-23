@@ -1,56 +1,67 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// const axios = require('axios');
-const token = Cookies.get("access-token");
-// Step-1: Create a new Axios instance with a custom config.
-// The timeout is set to 10s. If the request takes longer than
-// that then the request will be aborted.
 const customAxios = axios.create({
-    baseURL: `https://example.com/api`,
-    timeout: 10000,
+	baseURL: ``,
+	timeout: 10000,
 });
 
-// Step-2: Create request, response & error handlers
-const requestHandler = (request) => {
-    // Token will be dynamic so we can use any app-specific way to always
-    // fetch the new token before making the call
-    request.headers.Authorization = `Bearer ${token}`;
-
-    return request;
-};
-
-const responseHandler = async (response) => {
-    const refreshToken = Cookies.get("refresh-token");
-    if (response.status === 401) {
-        // Refresh token
-        const { token } = await axios.post(
-            "http://localhost:5000/api/auth/refresh",
-            { refresh: refreshToken }
-        );
-        Cookies.set("access-token", token.access);
-        Cookies.set("refresh-token", token.refresh);
-    }
-
-    return response;
-};
-
-const errorHandler = (error) => {
-    return Promise.reject(error);
-};
-
-// Step-3: Configure/make use of request & response interceptors from Axios
-// Note: You can create one method say configureInterceptors, add below in that,
-// export and call it in an init function of the application/page.
 customAxios.interceptors.request.use(
-    (request) => requestHandler(request),
-    (error) => errorHandler(error)
+	(config) => {
+		const token = localStorage.get("access-token");
+		if (token) {
+			config.headers["Authorization"] = "Bearer " + token;
+		}
+		// config.headers['Content-Type'] = 'application/json';
+		return config;
+	},
+	(error) => {
+		Promise.reject(error);
+	}
 );
 
 customAxios.interceptors.response.use(
-    (response) => responseHandler(response),
-    (error) => errorHandler(error)
+	(response) => {
+		return response;
+	},
+	function (error) {
+		const originalRequest = error.config;
+
+		if (
+			error.response.status === 401 &&
+			originalRequest.url === "http://localhost:5000/api/auth/refresh"
+		) {
+			return Promise.reject(error);
+		}
+
+		if (error.response.status === 403 && !originalRequest._retry) {
+			originalRequest._retry = true;
+			const refreshToken = Cookies.get("refresh-token");
+			return axios
+				.post("http://localhost:5000/api/auth/refresh", {
+					refresh: refreshToken,
+				})
+				.then((res) => {
+					if (res.status === 403) {
+						return Promise.reject(res);
+					}
+					if (res.status === 200) {
+						Cookies.set("refresh-token", res.data);
+						axios.defaults.headers.common["Authorization"] =
+							"Bearer " + Cookies.get("access-token");
+						return axios(originalRequest);
+					}
+				});
+		}
+		return Promise.reject(error);
+	}
 );
 
-// Step-4: Export the newly created Axios instance to be used in different locations.
+customAxios.interceptors.response.use(
+	(res) => res,
+	(err) => {
+		throw new Error(err.response.data.message);
+	}
+);
+
 export default customAxios;

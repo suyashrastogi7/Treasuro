@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { alertActions } from "../../features/alertSlice";
 import NavLinks from "./NavLinks";
 import { logout } from "../../features/loginSlice";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -56,6 +57,9 @@ const Navbar = () => {
 
                             <button
                                 onClick={() => {
+                                    localStorage.removeItem("access-token");
+                                    Cookies.remove("access-token");
+                                    Cookies.remove("refresh-token");
                                     dispatch(logout());
                                     dispatch(
                                         alertActions.createAlert({
@@ -64,6 +68,7 @@ const Navbar = () => {
                                             status: "success",
                                         })
                                     );
+                                    navigate("/", { replace: true });
                                 }}
                                 className="flex justify-between items-center px-12 text-white bg-hot-pink rounded hover:bg-[#D90166] py-2"
                             >
