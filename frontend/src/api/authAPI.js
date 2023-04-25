@@ -7,7 +7,7 @@ export function signin({ username, password }) {
     try {
       const emailOrUsername = username;
       const response = await axios.post(
-        `http://192.168.0.115:5000/api/auth/signin`,
+        `http://localhost:5000/api/auth/signin`,
         {
           emailOrUsername,
           password,
