@@ -11,7 +11,7 @@ const Hero = () => {
         <img
           src={LogoMain}
           className=" w-[250px] md:w-[360px] h-auto"
-          alt="Treasuro 2022"
+          alt="Treasuro 2023"
         />
         <p className="max-w-[160px] text-[20px] mt-[30px] tracking-wider text-center text-white font-bold">
           Are you ready for a Hunt?

@@ -12,21 +12,16 @@ import Cookies from "js-cookie";
 
 const Auth = () => {
 	const [active, setActive] = useState("Login");
-	const { signup } = useSelector((state) => state.signin);
-	const [submitted, setSubmitted] = useState(false);
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const { loading } = useSelector((state) => state.signin);
-	const { loggedIn } = useSelector((state) => state.signin);
+	const { loggedIn, signup, loading } = useSelector((state) => state.signin);
 
 	const [formState, setFormState] = useState({
-		username: "",
+		zealTag: "",
 		password: "",
 		rememberMe: false,
 	});
 	const [signState, setSignState] = useState({
 		name: "",
-		username: "",
+		zealTag: "",
 		password: "",
 		rollno: "",
 		email: "",
@@ -34,25 +29,7 @@ const Auth = () => {
 		image: DefaultUSer,
 	});
 
-	useEffect(() => {
-		if (loggedIn) {
-			dispatch(
-				alertActions.createAlert({
-					message: "Signed In Successfully 🤗",
-					status: "success",
-				})
-			);
-			navigate("/");
-		} else {
-			dispatch(
-				alertActions.createAlert({
-					message: "Error While Signin, Check your Credentials.",
-					status: "error",
-				})
-			);
-			reset();
-		}
-	}, [loggedIn, dispatch, navigate]);
+	const dispatch = useDispatch();
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
@@ -67,34 +44,7 @@ const Auth = () => {
 		};
 	};
 
-	function reset() {
-		setFormState({
-			username: "",
-			password: "",
-			rememberMe: false,
-		});
-		setSignState({
-			name: "",
-			username: "",
-			password: "",
-			rollno: "",
-			email: "",
-			phoneno: "",
-			image: DefaultUSer,
-		});
-	}
-
-	async function HandleOnClick(event) {
-		event.preventDefault();
-		setSubmitted(true);
-		dispatch(login(formState));
-	}
-	async function HandleOnClickSignup(event) {
-		event.preventDefault();
-		console.log(signState);
-		dispatch(register(signState));
-		dispatch(checkAuth());
-	}
+	const navigate = useNavigate();
 	const switchtoLogin = () => {
 		setActive("Login");
 	};
@@ -118,9 +68,7 @@ const Auth = () => {
 				<div title="buttons" className="flex flex-row">
 					<button
 						className="bg-[#98FF9D] flex justify-center items-center lg:px-20 px-9 lg:py-7 py-3 rounded-l-xl relative"
-						onClick={() => {
-							switchtoLogin();
-						}}
+						onClick={switchtoLogin}
 					>
 						<img
 							src={Weed1Black}
@@ -150,13 +98,13 @@ const Auth = () => {
 					<div className="lg:w-1/3 md:w-1/2 w-10/12">
 						<TitleDash title="LOGIN" className="my-9" />
 						<Input
-							type="text"
-							formValue={formState.username}
+							type="number"
+							formValue={formState.zealTag}
 							formState={formState}
 							setValue={setFormState}
-							label="Username"
-							Placeholder="Username"
-							name="username"
+							label="ZealTag"
+							Placeholder="0001"
+							name="zealTag"
 						/>
 						<Input
 							type="password"
@@ -178,8 +126,7 @@ const Auth = () => {
 							name="rememberMe"
 						/>
 						<button
-							onClick={HandleOnClick}
-							disabled={loading}
+							onClick={handleOnClick}
 							className="flex justify-between items-center cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 my-2 bg-hot-pink font-semibold"
 						>
 							<span className="mr-1 text-white">Login</span>
@@ -196,18 +143,18 @@ const Auth = () => {
 							formState={signState}
 							setValue={setSignState}
 							label="Name"
-							Placeholder="Neeraj Maurya"
+							Placeholder="Anuj Agarwal"
 							name="name"
 						/>
 
 						<Input
-							type="text"
-							formValue={signState.username}
+							type="number"
+							formValue={signState.zealTag}
 							formState={signState}
 							setValue={setSignState}
-							label="Username"
-							Placeholder="seiken420"
-							name="username"
+							label="ZealTag"
+							Placeholder="0001"
+							name="zealTag"
 						/>
 
 						<Input
@@ -225,7 +172,7 @@ const Auth = () => {
 							formState={signState}
 							setValue={setSignState}
 							label="Email"
-							Placeholder="pamaria@gmail.com"
+							Placeholder="jssmmil@gmail.com"
 							name="email"
 						/>
 						<Input
@@ -264,8 +211,7 @@ const Auth = () => {
 							</label>
 						</div>
 						<button
-							onClick={HandleOnClickSignup}
-							disabled={loading}
+							onClick={handleOnClickSignup}
 							className="flex justify-between items-center cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 my-4 bg-hot-pink font-semibold"
 						>
 							<span className="mr-1 text-white">Sign Up</span>
@@ -276,6 +222,48 @@ const Auth = () => {
 			</div>
 		</Template>
 	);
+	async function handleOnClick(event) {
+		event.preventDefault();
+		dispatch(login(formState));
+		if (loggedIn) {
+			dispatch(
+				alertActions.createAlert({
+					message: "Signed In Successfully 🤗",
+					status: "success",
+				})
+			);
+		} else {
+			dispatch(
+				alertActions.createAlert({
+					message: "Error While Signin",
+					status: "error",
+				})
+			);
+		}
+
+		navigate("/", { replace: true });
+	}
+	async function handleOnClickSignup(event) {
+		event.preventDefault();
+		console.log(signState);
+		dispatch(register(signState));
+		if (signup) {
+			dispatch(
+				alertActions.createAlert({
+					message: "Signed Up Successfully 🤗",
+					status: "success",
+				})
+			);
+			navigate("/success", { replace: true });
+		} else {
+			dispatch(
+				alertActions.createAlert({
+					message: "Error While Signin",
+					status: "error",
+				})
+			);
+		}
+	}
 };
 
 export default Auth;
