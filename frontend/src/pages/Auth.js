@@ -8,6 +8,7 @@ import TitleDash from "../components/TitleDash";
 import Template from "../components/Template";
 import Loader from "../components/Loader";
 import Input from "../components/Input";
+import axios from "axios";
 import Cookies from "js-cookie";
 
 const Auth = () => {
@@ -225,20 +226,22 @@ const Auth = () => {
 	async function handleOnClick(event) {
 		event.preventDefault();
 		dispatch(login(formState));
-		if (loggedIn) {
-			dispatch(
-				alertActions.createAlert({
-					message: "Signed In Successfully 🤗",
-					status: "success",
-				})
-			);
-		} else {
-			dispatch(
-				alertActions.createAlert({
-					message: "Error While Signin",
-					status: "error",
-				})
-			);
+		if (loggedIn !== null) {
+			if (loggedIn) {
+				dispatch(
+					alertActions.createAlert({
+						message: "Signed In Successfully 🤗",
+						status: "success",
+					})
+				);
+			} else {
+				dispatch(
+					alertActions.createAlert({
+						message: "Error While Signin",
+						status: "error",
+					})
+				);
+			}
 		}
 
 		navigate("/", { replace: true });
@@ -246,22 +249,32 @@ const Auth = () => {
 	async function handleOnClickSignup(event) {
 		event.preventDefault();
 		console.log(signState);
-		dispatch(register(signState));
-		if (signup) {
-			dispatch(
-				alertActions.createAlert({
-					message: "Signed Up Successfully 🤗",
-					status: "success",
-				})
+		// dispatch(register(signState));
+		try {
+			const response = await axios.post(
+				`http://localhost:5000/api/auth/signup`,
+				signState
 			);
-			navigate("/success", { replace: true });
-		} else {
-			dispatch(
-				alertActions.createAlert({
-					message: "Error While Signin",
-					status: "error",
-				})
-			);
+			const { success } = response.data;
+			console.log("Response ==> ", response);
+			if (success) {
+				dispatch(
+					alertActions.createAlert({
+						message: "Signed Up Successfully 🤗",
+						status: "success",
+					})
+				);
+				navigate("/success", { replace: true });
+			} else {
+				dispatch(
+					alertActions.createAlert({
+						message: "Error While Signin",
+						status: "error",
+					})
+				);
+			}
+		} catch (err) {
+			console.log(err);
 		}
 	}
 };
