@@ -16,10 +16,9 @@ import Rules from "./pages/Rules";
 
 const App = () => {
 	const dispatch = useDispatch();
-	const loggedInUser = useSelector((state) => state.signin.loggedInUser);
 	useEffect(() => {
 		dispatch(checkAuth());
-	}, [loggedInUser, dispatch]);
+	}, [dispatch]);
 	return (
 		<Router>
 			<Routes>

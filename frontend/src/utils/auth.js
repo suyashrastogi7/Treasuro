@@ -18,7 +18,7 @@ function isAuthenticated() {
 }
 
 function getToken() {
-	return Cookies.get("access-token");
+	return JSON.parse(localStorage.getItem("token"));
 }
 
 async function getUser() {
@@ -72,7 +72,7 @@ async function logout() {
 	try {
 		Cookies.remove("refresh-token");
 		Cookies.remove("access-token");
-		localStorage.removeItem(TOKEN_KEY);
+		localStorage.clear();
 		return {
 			success: true,
 		};

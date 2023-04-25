@@ -72,8 +72,9 @@ const answerQuestion = async (req, res) => {
 			message: errors.array(),
 		});
 	}
-	const { data } = req.body;
-	const token = req.headers.authorization.split(" ")[1];
+	const { data, token } = req.body;
+	// const token = req.headers.authorization.split(" ")[1];
+	console.log("Token in Answer API ==> ", token);
 	const id = jwt.decode(token)?.user.id;
 	const user = await User.findOne({
 		_id: id,

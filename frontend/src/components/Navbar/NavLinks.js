@@ -26,10 +26,10 @@ const NavLinks = () => {
 				</Link>
 			)}
 			{/* <Link to="/tickets">
-                <button className="lg:py-5 py-1 mx-4 cursor-pointer font-semibold text-lg lg:text-center text-left">
-                    Tickets
-                </button>
-            </Link> */}
+				<button className="lg:py-5 py-1 mx-4 cursor-pointer font-semibold text-lg lg:text-center text-left">
+					Tickets
+				</button>
+			</Link> */}
 		</div>
 	);
 };

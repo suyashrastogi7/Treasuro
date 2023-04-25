@@ -14,7 +14,6 @@ export function getQuestion(token) {
 				}
 			);
 			const { question, level } = response.data.question;
-			console.log(question);
 			return resolve({ level, question });
 		} catch (err) {
 			console.log(err);
@@ -23,12 +22,19 @@ export function getQuestion(token) {
 	});
 }
 
-export function postAnswer(data) {
+export function postAnswer(data, token) {
+	console.log("TOKEN IN API ==> ", token);
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await axios.post(
 				`http://localhost:5000/api/question/ans`,
-				data
+				data,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + token,
+					},
+				}
 			);
 			const { success, msg } = response.data;
 			console.log(success, msg);

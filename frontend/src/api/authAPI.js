@@ -1,7 +1,4 @@
-// import { AxiosPrivate } from "../utils/config";
-// import axios from "../utils/config";
 import axios from "axios";
-import customAxios from "../utils/config";
 
 export function signin({ username, password }) {
 	return new Promise(async (resolve, reject) => {
@@ -16,6 +13,8 @@ export function signin({ username, password }) {
 			);
 			console.log(response);
 			const { token, user } = response.data;
+			localStorage.setItem("user", JSON.stringify(user));
+			localStorage.setItem("token", JSON.stringify(token));
 			return resolve({ token, user });
 		} catch (err) {
 			console.log("Error", err);
@@ -41,11 +40,12 @@ export function signup(data) {
 	});
 }
 
-export function getProfile() {
+export function getProfile(token) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const response = await axios.get(
-				`http://localhost:5000/api/profile/getuser`
+			const response = await axios.post(
+				`http://localhost:5000/api/profile/getuser`,
+				token
 			);
 			const { user } = response.data;
 			return resolve({ user });

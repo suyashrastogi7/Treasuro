@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login, register, checkAuth } from "../features/loginSlice";
+import { login } from "../features/loginSlice";
 import { alertActions } from "../features/alertSlice";
 import { Arrow, Weed1Black, DefaultUSer } from "../components/AssetsExport";
 import TitleDash from "../components/TitleDash";
@@ -9,11 +9,10 @@ import Template from "../components/Template";
 import Loader from "../components/Loader";
 import Input from "../components/Input";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const Auth = () => {
 	const [active, setActive] = useState("Login");
-	const { loggedIn, signup, loading } = useSelector((state) => state.signin);
+	const { loggedIn, loading } = useSelector((state) => state.signin);
 
 	const [formState, setFormState] = useState({
 		username: "",

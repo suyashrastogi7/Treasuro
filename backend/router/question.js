@@ -5,9 +5,9 @@ const checkIfActive = require("../middlewares/checkIfActive");
 
 // controllers
 const {
-    getQuestion,
-    createQuestion,
-    answerQuestion,
+	getQuestion,
+	createQuestion,
+	answerQuestion,
 } = require("../controllers/question.controller");
 
 /**
@@ -30,13 +30,13 @@ router.get("/getone", getQuestion);
  * @desc    create a question
  */
 router.post(
-    "/",
-    [
-        check("question", "question is required").exists(),
-        check("answer", "answer is required").exists(),
-        check("level", "level is required").exists(),
-    ],
-    createQuestion
+	"/",
+	[
+		check("question", "question is required").exists(),
+		check("answer", "answer is required").exists(),
+		check("level", "level is required").exists(),
+	],
+	createQuestion
 );
 
 /**
@@ -45,9 +45,9 @@ router.post(
  * @desc    answer a question
  */
 router.post(
-    "/ans",
-    check("answer", "answer is required").exists(),
-    answerQuestion
+	"/ans",
+	// check("answer", "answer is required").exists(),
+	answerQuestion
 );
 
 module.exports = router;

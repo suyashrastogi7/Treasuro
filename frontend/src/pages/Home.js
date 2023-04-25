@@ -4,20 +4,18 @@ import Hero from "../components/Hero";
 import Why from "../components/Sections/Why";
 import JoinUs from "../components/Sections/JoinUs";
 import Prizes from "../components/Sections/Prizes";
-import Tickets from "../components/Sections/Tickets";
 
 const Home = () => {
-  return (
-    <div>
-      <Hero />
-      <Why />
-      <Prizes />
-      <Tickets />
-      <JoinUs />
-      <Footer />
-      <FooterMade />
-    </div>
-  );
+	return (
+		<div>
+			<Hero />
+			<Why />
+			<Prizes />
+			<JoinUs />
+			<Footer />
+			<FooterMade />
+		</div>
+	);
 };
 
 export default Home;

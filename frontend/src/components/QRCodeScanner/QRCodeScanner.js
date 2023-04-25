@@ -1,51 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./QRCodeScanner.css";
-import axios from 'axios'
 import Html5QrcodePlugin from "./Html5QrcodePlugin";
-import ResultContainerPlugin from "./ResultContainerPlugin.jsx";
-import {useDispatch} from "react-redux";
-// import { postAnswer } from "../../api/questionAPI";
-import { answer } from "../../features/questionSlice";
-import { useSelector } from "react-redux";
-import {alertActions} from "../../features/alertSlice"
+import { useDispatch } from "react-redux";
+import { alertActions } from "../../features/alertSlice";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const QRCodeScanner = (props) => {
-  const dispatch = useDispatch();
-  const {success,message,error} = useSelector((state)=>state.question);
-  const [decodedResults, setDecodedResults] = useState([]);
-  const onNewScanResult = (decodedText, decodedResult) => {
-    console.log("App [result]", decodedResult);
-    setDecodedResults((prev) => [...prev, decodedResult]);
-    if(decodedResults !== []){
-      dispatch(answer(decodedResults[0]))
-    }
-  };
-  useEffect(()=>{
-    if(success != null && message != ""){
-      dispatch(alertActions.createAlert({
-				message: success?message:error.message,
-        status:success?"success":"error",
-      }))
-    }
-  },[success,message])
+	const dispatch = useDispatch();
+	const token = Cookies.get("access-token");
 
-  return (
-    <div className="App">
-      <section className="App-section">
-        <div className="App-section-title"> Html5-qrcode React demo</div>
-        <br />
-        <br />
-        <br />
-        <Html5QrcodePlugin
-          fps={10}
-          qrbox={250}
-          disableFlip={false}
-          qrCodeSuccessCallback={onNewScanResult}
-        />
-        {/* <ResultContainerPlugin results={decodedResults} /> */}
-      </section>
-    </div>
-  );
+	const onNewScanResult = async (decodedText, decodedResult) => {
+		try {
+			const response = await axios.post(
+				`http://localhost:5000/api/question/ans`,
+				{
+					data: decodedText,
+					token: token,
+				}
+			);
+			const { success, msg } = response.data;
+			if (success) {
+				dispatch(
+					alertActions.createAlert({
+						message: msg,
+						status: "success",
+					})
+				);
+			} else {
+				dispatch(
+					alertActions.createAlert({
+						message: msg,
+						status: "error",
+					})
+				);
+			}
+			console.log(success, msg);
+		} catch (err) {
+			dispatch(
+				alertActions.createAlert({
+					message: "Failed to post answer",
+					status: "error",
+				})
+			);
+			console.error(err);
+		}
+	};
+
+	return (
+		<div className="App">
+			<section className="App-section">
+				<br />
+				<br />
+				<br />
+				<Html5QrcodePlugin
+					fps={10}
+					qrbox={250}
+					disableFlip={false}
+					qrCodeSuccessCallback={onNewScanResult}
+				/>
+				{/* <ResultContainerPlugin results={decodedResults} /> */}
+			</section>
+		</div>
+	);
 };
 
 export default QRCodeScanner;

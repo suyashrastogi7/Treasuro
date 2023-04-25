@@ -1,24 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import { auth } from "../utils/auth";
-import { Navigate } from "react-router-dom";
-// import store from "../store";
-import { alertActions } from "./alertSlice";
-import Cookies from "js-cookie";
+import { getProfile } from "../api/authAPI";
 
 export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
 	return new Promise(async (resolve, reject) => {
-		try {
-			if (auth.isAuthenticated()) {
-				const token = Cookies.get("access-token");
-				const { user } = await auth.getUser();
-				return resolve({ user, token: token });
-			} else {
-				reject({ token: null, user: null });
-			}
-		} catch (err) {
-			return reject({ token: null, user: null });
-		}
+		const token = JSON.parse(localStorage.getItem("token"));
+		const { user } = await getProfile(token);
+		console.log(user, token);
+		if (user !== "") return resolve({ user, token });
+		else return reject({ user, token });
 	});
 });
 
@@ -49,8 +39,7 @@ export const signinSlice = createSlice({
 	extraReducers: {
 		[checkAuth.pending]: startLoading,
 		[checkAuth.fulfilled]: (state, { payload }) => {
-			const { user = null, token } = payload;
-
+			const { user, token } = payload;
 			Object.assign(state, {
 				loading: false,
 				error: null,

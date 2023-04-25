@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema({
 	},
 	attempts: {
 		type: Number,
-		default: 0,
+		default: 5,
 	},
 	verified: {
 		type: Boolean,
