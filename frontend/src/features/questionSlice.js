@@ -4,8 +4,9 @@ import { getQuestion, postAnswer } from "../api/questionAPI";
 const initialState = {
     level: 0,
     question: "",
-    success: false,
+    success: null,
     message: "",
+    error:null
 };
 
 export const question = createAsyncThunk("question/get", getQuestion);

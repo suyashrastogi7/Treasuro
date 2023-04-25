@@ -124,6 +124,7 @@ const signIn = async (req, res) => {
 		const user = await User.findOne({
 			$or: [{ username: emailOrUsername }, { email: emailOrUsername }],
 		});
+		console.log(user)
 
 		if (!user) {
 			return res.status(422).json({

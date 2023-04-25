@@ -10,7 +10,7 @@ import { answer, question } from "../features/questionSlice";
 
 // import { Qr } from "../components/AssetsExport";
 import { alertActions } from "../features/alertSlice";
-
+import QRCodeScanner from "../components/QRCodeScanner/QRCodeScanner";
 const Question = () => {
 	const dispatch = useDispatch();
 	const token = useSelector((state) => state.signin.token);
@@ -35,35 +35,7 @@ const Question = () => {
 				<p className="text-white text-xl my-8">Scan QR to answer : </p>
 			</div>
 			<div className="mx-auto">
-				<QrScan
-					constraints={{
-						facingMode: "environment",
-					}}
-					onScan={(result) => {
-						if (!!result) {
-							setData(result);
-							dispatch(answer(token, data));
-							dispatch(
-								alertActions.createAlert({
-									status: success,
-									message: message.message,
-								})
-							);
-						}
-					}}
-					onLoad={(result) => {
-						console.log(result);
-					}}
-					onError={(error) => {
-						console.log(error);
-					}}
-					style={{ height: 250, width: 250 }}
-					className="mx-auto"
-				/>
-				{/* <button className="flex mt-9 justify-between items-center relative mx-auto px-9 py-3 bg-white rounded-xl hover:scale-105 hover:-translate-y-1 transition ease-in-out hover:shadow-md">
-                    <p className="text-xl align-middle">Scan and Answer</p>
-                    <img src={Qr} alt="Scan QR" className="h-12 w-12 ml-4" />
-                </button> */}
+				<QRCodeScanner />
 			</div>
 		</Template>
 	);

@@ -41,17 +41,11 @@ export function signup(data) {
 	});
 }
 
-export function getProfile(token) {
+export function getProfile() {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const response = await customAxios.get(
-				`http://localhost:5000/api/profile/getuser`,
-				{
-					headers: {
-						"Content-type": "application/json",
-						Authorization: "Bearer " + token,
-					},
-				}
+			const response = await axios.get(
+				`http://localhost:5000/api/profile/getuser`
 			);
 			const { user } = response.data;
 			return resolve({ user });
