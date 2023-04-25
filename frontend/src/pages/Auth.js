@@ -39,7 +39,6 @@ const Auth = () => {
 			setSignState({ ...signState, image: reader.result });
 		};
 		reader.onerror = function (error) {
-			console.log("Error: ", error);
 			alert("Invalid Image, Please Select a Valid One!");
 		};
 	};
@@ -247,15 +246,12 @@ const Auth = () => {
 	}
 	async function handleOnClickSignup(event) {
 		event.preventDefault();
-		console.log(signState);
-		// dispatch(register(signState));
 		try {
 			const response = await axios.post(
 				`http://localhost:5000/api/auth/signup`,
 				signState
 			);
 			const { success } = response.data;
-			console.log("Response ==> ", response);
 			if (success) {
 				dispatch(
 					alertActions.createAlert({
@@ -272,9 +268,7 @@ const Auth = () => {
 					})
 				);
 			}
-		} catch (err) {
-			console.log(err);
-		}
+		} catch (err) {}
 	}
 };
 

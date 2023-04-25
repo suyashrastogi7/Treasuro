@@ -6,8 +6,6 @@ const showError = require("../utils/showError.js");
 const getProfile = async (req, res) => {
 	try {
 		const access = req.body;
-		console.log("TOKEN AT PROFILE ==> ", access);
-		// const token = req.decoded;
 		const id = jwt.decode(access.access)?.user.id;
 		const user = await User.findOne({
 			_id: id,
@@ -31,7 +29,6 @@ const getProfile = async (req, res) => {
 		}
 		res.status(401);
 	} catch (error) {
-		console.log(error);
 		showError(error, res);
 	}
 };

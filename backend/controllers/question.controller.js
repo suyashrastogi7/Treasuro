@@ -7,7 +7,6 @@ const showError = require("../utils/showError.js");
 const getQuestion = async (req, res) => {
 	try {
 		const token = req.headers.authorization.split(" ")[1];
-		console.log(token);
 		const id = jwt.decode(token)?.user.id;
 		const user = await User.findOne({
 			_id: id,
@@ -22,7 +21,6 @@ const getQuestion = async (req, res) => {
 				});
 			})
 			.catch((error) => {
-				console.log(error.message);
 				showError(error, res);
 				return res.status(201).json({
 					error,
@@ -73,8 +71,6 @@ const answerQuestion = async (req, res) => {
 		});
 	}
 	const { data, token } = req.body;
-	// const token = req.headers.authorization.split(" ")[1];
-	console.log("Token in Answer API ==> ", token);
 	const id = jwt.decode(token)?.user.id;
 	const user = await User.findOne({
 		_id: id,

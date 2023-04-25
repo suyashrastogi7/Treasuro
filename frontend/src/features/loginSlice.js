@@ -6,7 +6,6 @@ export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
 	return new Promise(async (resolve, reject) => {
 		const token = JSON.parse(localStorage.getItem("token"));
 		const { user } = await getProfile(token);
-		console.log(user, token);
 		if (user !== "") return resolve({ user, token });
 		else return reject({ user, token });
 	});

@@ -10,142 +10,126 @@ const Payment = require("../models/payment_schema");
 const Ticket = require("../models/ticket_schema");
 
 let instance = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
+	key_id: process.env.RAZORPAY_KEY_ID,
+	key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 const createOrder = async (req, res, next) => {
-    try {
-        const token = req.headers.authorization.split(" ")[1];
-        const id = jwt.decode(token)?.user.id;
-        const user = await User.findOne({
-            _id: id,
-        });
-        console.log(user);
-        const options = {
-            amount: 100,
-            currency: "INR",
-            receipt: shortid.generate(),
-            notes: {
-                username: user.username,
-            },
-        };
-        const data = await instance.orders.create(options);
-        console.log(data);
-        const order = new Order({
-            username: data.notes.username,
-            orderId: data.id,
-            amount: data.amount,
-        });
-        await order.save();
-        return res.status(200).json({
-            order,
-            message: "Order created successfully",
-        });
-    } catch (err) {
-        showError(err, res);
-    }
+	try {
+		const token = req.headers.authorization.split(" ")[1];
+		const id = jwt.decode(token)?.user.id;
+		const user = await User.findOne({
+			_id: id,
+		});
+		const options = {
+			amount: 100,
+			currency: "INR",
+			receipt: shortid.generate(),
+			notes: {
+				username: user.username,
+			},
+		};
+		const data = await instance.orders.create(options);
+		const order = new Order({
+			username: data.notes.username,
+			orderId: data.id,
+			amount: data.amount,
+		});
+		await order.save();
+		return res.status(200).json({
+			order,
+			message: "Order created successfully",
+		});
+	} catch (err) {
+		showError(err, res);
+	}
 };
 
 const verifyPayment = async (req, res) => {
-    function makeid(length) {
-        var result = "";
-        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        var charactersLength = characters.length;
-        for (var i = 0; i < length; i++) {
-            result += characters.charAt(
-                Math.floor(Math.random() * charactersLength)
-            );
-        }
-        var val = Math.floor(1000 + Math.random() * 9000);
-        result += `-${val}`;
-        return result;
-    }
-    try {
-        // getting the details back from our font-end
-        const {
-            orderCreationId,
-            razorpay_payment_id,
-            razorpay_order_id,
-            razorpay_signature,
-        } = req.body;
-        console.log(
-            orderCreationId,
-            razorpay_payment_id,
-            razorpay_order_id,
-            razorpay_signature
-        );
-        const token = req.headers.authorization.split(" ")[1];
-        const id = jwt.decode(token)?.user.id;
-        const user = await User.findOne({
-            _id: id,
-        });
-        console.log(user);
-        // Creating our own digest
-        // The format should be like this:
-        // digest = hmac_sha256(orderCreationId + "|" + razorpay_payment_id, secret);
-        const shasum = crypto.createHmac(
-            "sha256",
-            process.env.RAZORPAY_KEY_SECRET
-        );
+	function makeid(length) {
+		var result = "";
+		var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		var charactersLength = characters.length;
+		for (var i = 0; i < length; i++) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		var val = Math.floor(1000 + Math.random() * 9000);
+		result += `-${val}`;
+		return result;
+	}
+	try {
+		// getting the details back from our font-end
+		const {
+			orderCreationId,
+			razorpay_payment_id,
+			razorpay_order_id,
+			razorpay_signature,
+		} = req.body;
+		const token = req.headers.authorization.split(" ")[1];
+		const id = jwt.decode(token)?.user.id;
+		const user = await User.findOne({
+			_id: id,
+		});
+		// Creating our own digest
+		// The format should be like this:
+		// digest = hmac_sha256(orderCreationId + "|" + razorpay_payment_id, secret);
+		const shasum = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
 
-        shasum.update(`${orderCreationId}|${razorpay_payment_id}`);
+		shasum.update(`${orderCreationId}|${razorpay_payment_id}`);
 
-        const digest = shasum.digest("hex");
+		const digest = shasum.digest("hex");
 
-        // comaparing our digest with the actual signature
-        if (digest !== razorpay_signature)
-            return res.status(400).json({
-                msg: "Payment Failed : Signature Mismatch!",
-                orderId: null,
-                paymentId: null,
-                success: false,
-            });
+		// comaparing our digest with the actual signature
+		if (digest !== razorpay_signature)
+			return res.status(400).json({
+				msg: "Payment Failed : Signature Mismatch!",
+				orderId: null,
+				paymentId: null,
+				success: false,
+			});
 
-        // THE PAYMENT IS LEGIT & VERIFIED
-        // YOU CAN SAVE THE DETAILS IN YOUR DATABASE IF YOU WANT
+		// THE PAYMENT IS LEGIT & VERIFIED
+		// YOU CAN SAVE THE DETAILS IN YOUR DATABASE IF YOU WANT
 
-        const payment = new Payment({
-            username: user.username,
-            orderId: orderCreationId,
-            razorpay_payment_id,
-            razorpay_order_id,
-            razorpay_signature,
-        });
-        payment.save();
-        user.attempts += 3;
-        const ticket = makeid(4);
-        const _ticket = new Ticket({
-            ticketID: ticket,
-            payment: {
-                verified: true,
-                paymentId: razorpay_payment_id,
-            },
-            userID: user._id,
-        });
-        await _ticket.save();
-        // User.findOneAndUpdate(
-        //     { username: user.username },
-        //     { $push: { tickets: { id: ticket } } }
-        // );
-        user.ticketsPurchased.tickets.push({ id: ticket });
-        await user.save();
-        console.log(user);
-        res.status(200).json({
-            msg: "success",
-            orderId: razorpay_order_id,
-            paymentId: razorpay_payment_id,
-            success: true,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error);
-    }
+		const payment = new Payment({
+			username: user.username,
+			orderId: orderCreationId,
+			razorpay_payment_id,
+			razorpay_order_id,
+			razorpay_signature,
+		});
+		payment.save();
+		user.attempts += 3;
+		const ticket = makeid(4);
+		const _ticket = new Ticket({
+			ticketID: ticket,
+			payment: {
+				verified: true,
+				paymentId: razorpay_payment_id,
+			},
+			userID: user._id,
+		});
+		await _ticket.save();
+		// User.findOneAndUpdate(
+		//     { username: user.username },
+		//     { $push: { tickets: { id: ticket } } }
+		// );
+		user.ticketsPurchased.tickets.push({ id: ticket });
+		await user.save();
+		res.status(200).json({
+			msg: "success",
+			orderId: razorpay_order_id,
+			paymentId: razorpay_payment_id,
+			success: true,
+		});
+	} catch (error) {
+		res.status(500).send(error);
+	}
 };
 
 module.exports = {
-    createOrder,
-    verifyPayment,
+	createOrder,
+	verifyPayment,
 };
 
 /*

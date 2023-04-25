@@ -96,8 +96,6 @@ const signUp = async (req, res) => {
 		const salt = await bcrypt.genSalt(12);
 		newUser.password = await bcrypt.hash(newUser.password, salt);
 
-		console.log(newUser);
-
 		// generate jwt for user
 		await newUser.save();
 		return res.status(200).json({
@@ -124,7 +122,6 @@ const signIn = async (req, res) => {
 		const user = await User.findOne({
 			$or: [{ username: emailOrUsername }, { email: emailOrUsername }],
 		});
-		console.log(user)
 
 		if (!user) {
 			return res.status(422).json({

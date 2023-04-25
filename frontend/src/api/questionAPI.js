@@ -16,14 +16,12 @@ export function getQuestion(token) {
 			const { question, level } = response.data.question;
 			return resolve({ level, question });
 		} catch (err) {
-			console.log(err);
 			return reject(err);
 		}
 	});
 }
 
 export function postAnswer(data, token) {
-	console.log("TOKEN IN API ==> ", token);
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await axios.post(
@@ -37,10 +35,8 @@ export function postAnswer(data, token) {
 				}
 			);
 			const { success, msg } = response.data;
-			console.log(success, msg);
 			return resolve({ success, msg });
 		} catch (err) {
-			console.log(err);
 			return reject(err);
 		}
 	});

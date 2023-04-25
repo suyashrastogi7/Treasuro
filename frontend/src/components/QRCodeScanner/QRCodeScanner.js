@@ -35,7 +35,6 @@ const QRCodeScanner = (props) => {
 					})
 				);
 			}
-			console.log(success, msg);
 		} catch (err) {
 			dispatch(
 				alertActions.createAlert({

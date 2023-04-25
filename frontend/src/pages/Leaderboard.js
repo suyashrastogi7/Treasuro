@@ -26,12 +26,9 @@ const Leaderboard = () => {
 					`http://localhost:5000/api/leaderboard`,
 					config
 				);
-				console.log("Leaderboard ==> ", data);
 				setData(data);
 				setLoading(false);
-			} catch (err) {
-				console.log(err);
-			}
+			} catch (err) {}
 		}
 		getLeaderboard();
 	}, [refresh, access]);
