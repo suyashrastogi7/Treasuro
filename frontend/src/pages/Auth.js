@@ -15,13 +15,13 @@ const Auth = () => {
 	const { loggedIn, signup, loading } = useSelector((state) => state.signin);
 
 	const [formState, setFormState] = useState({
-		zealTag: "",
+		username: "",
 		password: "",
 		rememberMe: false,
 	});
 	const [signState, setSignState] = useState({
 		name: "",
-		zealTag: "",
+		username: "",
 		password: "",
 		rollno: "",
 		email: "",
@@ -99,12 +99,12 @@ const Auth = () => {
 						<TitleDash title="LOGIN" className="my-9" />
 						<Input
 							type="number"
-							formValue={formState.zealTag}
+							formValue={formState.username}
 							formState={formState}
 							setValue={setFormState}
 							label="ZealTag"
 							Placeholder="0001"
-							name="zealTag"
+							name="username"
 						/>
 						<Input
 							type="password"
@@ -149,12 +149,12 @@ const Auth = () => {
 
 						<Input
 							type="number"
-							formValue={signState.zealTag}
+							formValue={signState.username}
 							formState={signState}
 							setValue={setSignState}
 							label="ZealTag"
 							Placeholder="0001"
-							name="zealTag"
+							name="username"
 						/>
 
 						<Input

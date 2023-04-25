@@ -4,13 +4,15 @@ import { auth } from "../utils/auth";
 import { Navigate } from "react-router-dom";
 // import store from "../store";
 import { alertActions } from "./alertSlice";
+import Cookies from "js-cookie";
 
 export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			if (auth.isAuthenticated()) {
+				const token = Cookies.get("access-token");
 				const { user } = await auth.getUser();
-				return resolve({ user });
+				return resolve({ user, token: token });
 			} else {
 				reject({ token: null, user: null });
 			}
@@ -47,13 +49,14 @@ export const signinSlice = createSlice({
 	extraReducers: {
 		[checkAuth.pending]: startLoading,
 		[checkAuth.fulfilled]: (state, { payload }) => {
-			const { user = null } = payload;
+			const { user = null, token } = payload;
 
 			Object.assign(state, {
 				loading: false,
 				error: null,
 				loggedIn: true,
 				loggedInUser: user,
+				token: token,
 			});
 		},
 		[checkAuth.rejected]: (state, action) => {
@@ -70,16 +73,6 @@ export const signinSlice = createSlice({
 			Object.assign(state, {
 				loading: false,
 				signup: payload,
-			});
-			// store.dispatch(
-			// 	alertActions.createAlert({
-			// 		message: "Signed Up Successfully 🤗",
-			// 		status: "success",
-			// 	})
-			// );
-			Navigate({
-				to: "/leaderboard",
-				replace: true,
 			});
 		},
 		[register.rejected]: receiveError,
@@ -130,7 +123,7 @@ function startLoading(state) {
 function receiveError(state, action) {
 	Object.assign(state, {
 		loading: false,
-		error: action.error,
+		error: action.payload,
 	});
 }
 

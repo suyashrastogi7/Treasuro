@@ -8,7 +8,7 @@ const customAxios = axios.create({
 
 customAxios.interceptors.request.use(
 	(config) => {
-		const token = localStorage.get("access-token");
+		const token = Cookies.get("access-token");
 		if (token) {
 			config.headers["Authorization"] = "Bearer " + token;
 		}

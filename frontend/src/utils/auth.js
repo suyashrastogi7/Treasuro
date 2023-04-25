@@ -22,7 +22,9 @@ function getToken() {
 }
 
 async function getUser() {
-	const user = await getProfile();
+	const token = Cookies.get("access-token");
+	console.log("TOKEN ==> ", token);
+	const user = await getProfile(token);
 	return user;
 }
 
@@ -62,6 +64,7 @@ async function register(data) {
 		// thunkAPI.dispatch(setMessage(err.message));
 		// return thunkAPI.rejectWithValue();
 		console.log(err);
+		return err;
 	}
 }
 
