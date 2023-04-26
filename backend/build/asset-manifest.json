@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.e543d55b.css",
-    "main.js": "/static/js/main.f0f89f05.js",
+    "main.js": "/static/js/main.2f021d02.js",
     "static/media/thirdPrize.png": "/static/media/thirdPrize.d495bba67cd141743da5.png",
     "static/media/secondPrize.png": "/static/media/secondPrize.b5774c01e7f8460c93bb.png",
     "static/media/firstPrize.png": "/static/media/firstPrize.13d22f81ad6eadceecce.png",
@@ -41,6 +41,6 @@
   },
   "entrypoints": [
     "static/css/main.e543d55b.css",
-    "static/js/main.f0f89f05.js"
+    "static/js/main.2f021d02.js"
   ]
 }

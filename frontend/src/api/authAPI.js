@@ -4,13 +4,10 @@ export function signin({ username, password }) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const emailOrUsername = username;
-			const response = await axios.post(
-				`http://localhost:5000/api/auth/signin`,
-				{
-					emailOrUsername,
-					password,
-				}
-			);
+			const response = await axios.post(`https://treasuro.in/api/auth/signin`, {
+				emailOrUsername,
+				password,
+			});
 			const { token, user } = response.data;
 			if (token != null && user != null) {
 				localStorage.setItem("user", JSON.stringify(user));
@@ -27,7 +24,7 @@ export function signup(data) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await axios.post(
-				`http://localhost:5000/api/auth/signup`,
+				`https://treasuro.in/api/auth/signup`,
 				data
 			);
 			const { success } = response.data;
@@ -42,7 +39,7 @@ export function getProfile(token) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await axios.post(
-				`http://localhost:5000/api/profile/getuser`,
+				`https://treasuro.in/api/profile/getuser`,
 				token
 			);
 			const { user } = response.data;

@@ -260,7 +260,7 @@ const Auth = () => {
 		event.preventDefault();
 		try {
 			const response = await axios.post(
-				`http://localhost:5000/api/auth/signup`,
+				`https://treasuro.in/api/auth/signup`,
 				signState
 			);
 			const { success } = response.data;

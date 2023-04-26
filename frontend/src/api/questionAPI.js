@@ -5,7 +5,7 @@ export function getQuestion(token) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await axios.get(
-				`http://localhost:5000/api/question/getone`,
+				`https://treasuro.in/api/question/getone`,
 				{
 					headers: {
 						"Content-type": "application/json",
@@ -25,7 +25,7 @@ export function postAnswer(data, token) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await axios.post(
-				`http://localhost:5000/api/question/ans`,
+				`https://treasuro.in/api/question/ans`,
 				data,
 				{
 					headers: {

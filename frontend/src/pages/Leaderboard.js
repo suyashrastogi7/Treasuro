@@ -23,7 +23,7 @@ const Leaderboard = () => {
 					},
 				};
 				const { data } = await axios.get(
-					`http://localhost:5000/api/leaderboard`,
+					`https://treasuro.in/api/leaderboard`,
 					config
 				);
 				setData(data);

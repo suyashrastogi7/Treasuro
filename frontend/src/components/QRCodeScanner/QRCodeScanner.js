@@ -13,7 +13,7 @@ const QRCodeScanner = (props) => {
 	const onNewScanResult = async (decodedText, decodedResult) => {
 		try {
 			const response = await axios.post(
-				`http://localhost:5000/api/question/ans`,
+				`https://treasuro.in/api/question/ans`,
 				{
 					data: decodedText,
 					token: token,

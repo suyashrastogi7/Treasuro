@@ -29,7 +29,7 @@ customAxios.interceptors.response.use(
 
 		if (
 			error.response.status === 401 &&
-			originalRequest.url === "http://localhost:5000/api/auth/refresh"
+			originalRequest.url === "https://treasuro.in/api/auth/refresh"
 		) {
 			return Promise.reject(error);
 		}
@@ -38,7 +38,7 @@ customAxios.interceptors.response.use(
 			originalRequest._retry = true;
 			const refreshToken = Cookies.get("refresh-token");
 			return axios
-				.post("http://localhost:5000/api/auth/refresh", {
+				.post("https://treasuro.in/api/auth/refresh", {
 					refresh: refreshToken,
 				})
 				.then((res) => {
