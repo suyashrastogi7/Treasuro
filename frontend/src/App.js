@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { checkAuth } from "./features/loginSlice";
 import { useEffect } from "react";
 import ProtectedRoute from "./components/Protected";

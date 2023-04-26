@@ -27,32 +27,15 @@ async function getUser() {
 	return user;
 }
 
-async function login({ username, password, rememberMe }) {
-	const { token, user } = await signin({ username, password });
-	Cookies.set("access-token", token.access, {
-		path: "/",
-		expires: 1,
-	});
-	Cookies.set("refresh-token", token.refresh, {
-		path: "/",
-		expires: 5,
-	});
-	if (rememberMe) {
-		localStorage.setItem("access-token", token.access);
-		localStorage.setItem(TOKEN_KEY, token.refresh);
+async function login({ username, password }) {
+	try {
+		const { token, user } = await signin({ username, password });
+		return { token, user };
+	} catch (err) {
+		console.log(err);
+		return { error: err.response.data.message };
 	}
-	return { token, user };
 }
-
-// async function renewAccessToken() {
-//     try {
-//         const refresh = Cookies.get("refresh-token");
-//         const { token } = await renewAccess(refresh);
-//         return Promise.resolve({ token });
-//     } catch (err) {
-//         return Promise.reject(err.response?.data?.msg);
-//     }
-// }
 
 async function register(data) {
 	try {

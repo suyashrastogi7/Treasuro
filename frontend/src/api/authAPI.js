@@ -12,8 +12,10 @@ export function signin({ username, password }) {
 				}
 			);
 			const { token, user } = response.data;
-			localStorage.setItem("user", JSON.stringify(user));
-			localStorage.setItem("token", JSON.stringify(token));
+			if (token != null && user != null) {
+				localStorage.setItem("user", JSON.stringify(user));
+				localStorage.setItem("token", JSON.stringify(token));
+			}
 			return resolve({ token, user });
 		} catch (err) {
 			return reject(err);

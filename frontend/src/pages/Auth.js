@@ -9,10 +9,12 @@ import Template from "../components/Template";
 import Loader from "../components/Loader";
 import Input from "../components/Input";
 import axios from "axios";
+import { signin } from "../api/authAPI";
+import { auth } from "../utils/auth";
 
 const Auth = () => {
 	const [active, setActive] = useState("Login");
-	const { loggedIn, loading } = useSelector((state) => state.signin);
+	const { loading } = useSelector((state) => state.signin);
 
 	const [formState, setFormState] = useState({
 		username: "",
@@ -223,26 +225,36 @@ const Auth = () => {
 	);
 	async function handleOnClick(event) {
 		event.preventDefault();
-		dispatch(login(formState));
-		if (loggedIn !== null) {
-			if (loggedIn) {
-				dispatch(
-					alertActions.createAlert({
-						message: "Signed In Successfully 🤗",
-						status: "success",
-					})
-				);
-			} else {
-				dispatch(
-					alertActions.createAlert({
-						message: "Error While Signin",
-						status: "error",
-					})
-				);
-			}
-		}
-
-		navigate("/", { replace: true });
+		const username = formState.username;
+		const password = formState.password;
+		dispatch(login({ username, password }));
+		// try {
+		// 	const { token, user } = await auth.login({ username, password });
+		// 	if (!!token && !!user) {
+		// 		dispatch(
+		// 			alertActions.createAlert({
+		// 				message: "Signed In Successfully 🤗",
+		// 				status: "success",
+		// 			})
+		// 		);
+		// 		navigate("/", { replace: true });
+		// 	} else {
+		// 		dispatch(
+		// 			alertActions.createAlert({
+		// 				message: "Error While Signin",
+		// 				status: "error",
+		// 			})
+		// 		);
+		// 	}
+		// } catch (err) {
+		// 	console.log(err);
+		// 	dispatch(
+		// 		alertActions.createAlert({
+		// 			status: "error",
+		// 			message: err.response.data.message,
+		// 		})
+		// 	);
+		// }
 	}
 	async function handleOnClickSignup(event) {
 		event.preventDefault();
@@ -268,7 +280,15 @@ const Auth = () => {
 					})
 				);
 			}
-		} catch (err) {}
+		} catch (err) {
+			console.log(err);
+			dispatch(
+				alertActions.createAlert({
+					status: "error",
+					message: err.response.data.message[0].msg,
+				})
+			);
+		}
 	}
 };
 

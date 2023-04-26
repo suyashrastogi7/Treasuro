@@ -5,9 +5,13 @@ import { getProfile } from "../api/authAPI";
 export const checkAuth = createAsyncThunk("signin/checkAuth", async () => {
 	return new Promise(async (resolve, reject) => {
 		const token = JSON.parse(localStorage.getItem("token"));
-		const { user } = await getProfile(token);
-		if (user !== "") return resolve({ user, token });
-		else return reject({ user, token });
+
+		if (token) {
+			const { user } = await getProfile(token);
+			if (user !== "") return resolve({ user, token });
+		}
+
+		return reject({ error: "User is not logged in!" });
 	});
 });
 
@@ -52,8 +56,6 @@ export const signinSlice = createSlice({
 				loading: false,
 				error: action.error,
 			});
-			// window.location.replace(true);
-			// window.location.href = "/signin";
 		},
 
 		[register.pending]: startLoading,
@@ -68,13 +70,16 @@ export const signinSlice = createSlice({
 		[login.pending]: startLoading,
 		[login.fulfilled]: (state, { payload }) => {
 			const { user, token } = payload;
-			return Object.assign(state, {
-				...initialState,
-				loading: false,
-				loggedIn: true,
-				loggedInUser: user,
-				token,
-			});
+			if (user != null && token != null) {
+				return Object.assign(state, {
+					...initialState,
+					loading: false,
+					loggedIn: true,
+					loggedInUser: user,
+					token,
+				});
+			}
+			return initialState;
 		},
 		[login.rejected]: receiveError,
 
