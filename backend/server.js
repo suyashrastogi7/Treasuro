@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "development") {
 	const morgan = require("morgan");
 	app.use(morgan("dev"));
 }
-app.use(express.static("build"));
+// app.use(express.static("build"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 

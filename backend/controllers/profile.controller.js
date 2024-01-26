@@ -5,8 +5,8 @@ const showError = require("../utils/showError.js");
 
 const getProfile = async (req, res) => {
 	try {
-		const access = req.body;
-		const id = jwt.decode(access.access)?.user.id;
+		const access = req.headers.authorization;
+		const id = jwt.decode(access)?.user.id;
 		const user = await User.findOne({
 			_id: id,
 		});

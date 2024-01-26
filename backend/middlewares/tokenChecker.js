@@ -3,7 +3,7 @@ const { TokenExpiredError } = jwt;
 
 module.exports = (req, res, next) => {
     const token =
-        req.headers.Authorization ||
+        req.headers.authorization ||
         req.query.token ||
         req.headers["x-access-token"];
     // decode token

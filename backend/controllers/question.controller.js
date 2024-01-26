@@ -6,7 +6,7 @@ const showError = require("../utils/showError.js");
 
 const getQuestion = async (req, res) => {
 	try {
-		const token = req.headers.authorization.split(" ")[1];
+		const token = req.headers.authorization;
 		const id = jwt.decode(token)?.user.id;
 		const user = await User.findOne({
 			_id: id,
@@ -16,6 +16,7 @@ const getQuestion = async (req, res) => {
 			.select("-answer")
 			.select("-__v")
 			.then((question) => {
+				console.log(question)
 				return res.status(200).json({
 					question,
 				});
@@ -70,7 +71,8 @@ const answerQuestion = async (req, res) => {
 			message: errors.array(),
 		});
 	}
-	const { data, token } = req.body;
+	const { data } = req.body;
+	const token = req.headers.authorization;
 	const id = jwt.decode(token)?.user.id;
 	const user = await User.findOne({
 		_id: id,
