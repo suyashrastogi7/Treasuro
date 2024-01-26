@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/loginSlice";
+import { useDispatch } from "react-redux";
+
+//Actions
 import { alertActions } from "../features/alertSlice";
+
+//Components
 import { Arrow, Weed1Black, DefaultUSer } from "../components/AssetsExport";
 import TitleDash from "../components/TitleDash";
 import Template from "../components/Template";
 import Loader from "../components/Loader";
 import Input from "../components/Input";
-import axios from "axios";
-import { signin } from "../api/authAPI";
+
+//API
+import { signin, signup } from "../api/authAPI";
+
+//Utils
 import { auth } from "../utils/auth";
 
 const Auth = () => {
-	const [active, setActive] = useState("Login");
-	const { loading } = useSelector((state) => state.signin);
+	const [active, setActive] = useState("Login")
+	const [loading, setLoading] = useState(false);
 
 	const [formState, setFormState] = useState({
 		username: "",
@@ -30,6 +36,22 @@ const Auth = () => {
 		phoneno: "",
 		image: DefaultUSer,
 	});
+
+	const resetForm = (type) => {
+		type ? setFormState({
+			username: "",
+			password: "",
+			rememberMe: false,
+		}) : setSignState({
+			name: "",
+			username: "",
+			password: "",
+			rollno: "",
+			email: "",
+			phoneno: "",
+			image: DefaultUSer,
+		})
+	}
 
 	const dispatch = useDispatch();
 
@@ -225,45 +247,42 @@ const Auth = () => {
 	);
 	async function handleOnClick(event) {
 		event.preventDefault();
+		setLoading(true)
 		const username = formState.username;
 		const password = formState.password;
-		dispatch(login({ username, password }));
-		// try {
-		// 	const { token, user } = await auth.login({ username, password });
-		// 	if (!!token && !!user) {
-		// 		dispatch(
-		// 			alertActions.createAlert({
-		// 				message: "Signed In Successfully 🤗",
-		// 				status: "success",
-		// 			})
-		// 		);
-		// 		navigate("/", { replace: true });
-		// 	} else {
-		// 		dispatch(
-		// 			alertActions.createAlert({
-		// 				message: "Error While Signin",
-		// 				status: "error",
-		// 			})
-		// 		);
-		// 	}
-		// } catch (err) {
-		// 	console.log(err);
-		// 	dispatch(
-		// 		alertActions.createAlert({
-		// 			status: "error",
-		// 			message: err.response.data.message,
-		// 		})
-		// 	);
-		// }
+		try {
+			const {token, user} = await signin({username, password});
+			console.log("TOKEN ==> ",token)
+			if (!!token && !!user) {
+				auth.setToken(JSON.stringify(token));
+				auth.setUser(JSON.stringify(user));
+				dispatch(
+					alertActions.createAlert({
+						message: "Signed In Successfully 🤗",
+						status: "success",
+					})
+				);
+				setLoading(false);
+				navigate("/", { replace: true });
+			}
+		} catch (err) {
+			console.log(err);
+			dispatch(
+				alertActions.createAlert({
+					status: "error",
+					message: err.message,
+				})
+			);
+			resetForm(1);
+			setLoading(false);
+		}
 	}
 	async function handleOnClickSignup(event) {
 		event.preventDefault();
+		setLoading(true)
 		try {
-			const response = await axios.post(
-				`https://treasuro.in/api/auth/signup`,
-				signState
-			);
-			const { success } = response.data;
+			const response = await signup(signState)
+			const { success } = response;
 			if (success) {
 				dispatch(
 					alertActions.createAlert({
@@ -271,23 +290,20 @@ const Auth = () => {
 						status: "success",
 					})
 				);
+				setLoading(false)
 				navigate("/success", { replace: true });
-			} else {
-				dispatch(
-					alertActions.createAlert({
-						message: "Error While Signin",
-						status: "error",
-					})
-				);
 			}
-		} catch (err) {
+		} 
+		catch (err) {
 			console.log(err);
 			dispatch(
 				alertActions.createAlert({
 					status: "error",
-					message: err.response.data.message[0].msg,
+					message: err?.data?.message,
 				})
 			);
+			resetForm(0);
+			setLoading(false)
 		}
 	}
 };

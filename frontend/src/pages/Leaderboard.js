@@ -1,37 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { v4 } from "uuid";
-import axios from "axios";
+
+//Components
 import { Refresh } from "../components/AssetsExport";
 import RankRow from "../components/RankRow";
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 import Loader from "../components/Loader";
 
+import { getLeaderboard } from "../api/leaderboard";
+
 const Leaderboard = () => {
 	const [data, setData] = useState();
 	const [loading, setLoading] = useState(false);
 	const [refresh, setRefresh] = useState(false);
-	const { access } = useSelector((state) => state.signin.token);
 
 	useEffect(() => {
-		async function getLeaderboard() {
-			try {
-				let config = {
-					headers: {
-						Authorization: `Bearer ${access}`,
-					},
-				};
-				const { data } = await axios.get(
-					`https://treasuro.in/api/leaderboard`,
-					config
-				);
+		async function getLeaderBoard(){
+			try{
+				const data = await getLeaderboard();
 				setData(data);
 				setLoading(false);
-			} catch (err) {}
+			}
+			catch(err){
+				setLoading(false);			
+			}
 		}
-		getLeaderboard();
-	}, [refresh, access]);
+		getLeaderBoard();
+	}, [refresh]);
 
 	const List = data?.leaderboard?.map((el, idx) => (
 		<RankRow pos={idx + 1} idx={idx} pts={el.pts} name={el.name} key={v4()} />
@@ -54,7 +50,7 @@ const Leaderboard = () => {
 				<TitleDash title="leaderboard" />
 				<button
 					onClick={() => {
-						setRefresh((prev) => !prev);
+						setRefresh(prev => !prev);
 						setLoading(true);
 					}}
 				>

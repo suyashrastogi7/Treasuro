@@ -2,23 +2,19 @@ import React from "react";
 import "./QRCodeScanner.css";
 import Html5QrcodePlugin from "./Html5QrcodePlugin";
 import { useDispatch } from "react-redux";
+
+//ACtions
 import { alertActions } from "../../features/alertSlice";
-import Cookies from "js-cookie";
-import axios from "axios";
+
+//API
+import { postAnswer } from "../../api/questionAPI";
 
 const QRCodeScanner = (props) => {
 	const dispatch = useDispatch();
-	const token = Cookies.get("access-token");
 
-	const onNewScanResult = async (decodedText, decodedResult) => {
+	const onNewScanResult = async (decodedText) => {
 		try {
-			const response = await axios.post(
-				`https://treasuro.in/api/question/ans`,
-				{
-					data: decodedText,
-					token: token,
-				}
-			);
+			const response = await postAnswer(decodedText)
 			const { success, msg } = response.data;
 			if (success) {
 				dispatch(

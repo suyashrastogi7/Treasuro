@@ -1,12 +1,18 @@
-import axios from "axios";
+import { dispatchApi } from "../network/apiClient";
+import { API_METHOD } from "./Constants";
 
 export function signin({ username, password }) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const emailOrUsername = username;
-			const response = await axios.post(`https://treasuro.in/api/auth/signin`, {
-				emailOrUsername,
-				password,
+			const response = await dispatchApi({
+				endPoint: `/api/auth/signin`,
+				reqParam: {
+					emailOrUsername,
+					password,
+				},
+				method: API_METHOD.POST,
+				publicApi: true
 			});
 			const { token, user } = response.data;
 			if (token != null && user != null) {
@@ -23,10 +29,12 @@ export function signin({ username, password }) {
 export function signup(data) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const response = await axios.post(
-				`https://treasuro.in/api/auth/signup`,
-				data
-			);
+			const response = await dispatchApi({
+				endPoint: `/api/auth/signup`,
+				reqParam: data,
+				method: API_METHOD.POST,
+				publicApi: true
+			})
 			const { success } = response.data;
 			return resolve({ success });
 		} catch (err) {
@@ -35,14 +43,14 @@ export function signup(data) {
 	});
 }
 
-export function getProfile(token) {
+export function getProfile() {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const response = await axios.post(
-				`https://treasuro.in/api/profile/getuser`,
-				token
-			);
-			const { user } = response.data;
+			const response = await dispatchApi({
+				endPoint: `/profile/getuser`,
+				method: API_METHOD.GET
+			});
+			const { user } = response;
 			return resolve({ user });
 		} catch (err) {
 			return reject(err);

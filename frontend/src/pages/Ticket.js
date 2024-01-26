@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+
+//Components
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 import Ticket from "../components/Ticket";
@@ -7,7 +9,7 @@ import { Link } from "react-router-dom";
 import { Coin } from "../components/AssetsExport";
 
 const Tickets = () => {
-    const tickets = useSelector((state) => state.signin.loggedInUser.tickets);
+    const tickets = useSelector((state) => state.user.user.tickets);
     return (
         <Template>
             <div>

@@ -2,11 +2,13 @@ import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
+//ACtions
 import { alertActions } from "../features/alertSlice";
-import { checkAuth } from "../features/loginSlice";
+
+//Components
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
-
 import { Weed1Yellow, Arrow } from "../components/AssetsExport";
 
 async function loadSDK() {
@@ -27,7 +29,7 @@ const Payments = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const access = useSelector((state) => state.signin.token.access);
-	const { name } = useSelector((state) => state.signin.loggedInUser);
+	const { name } = useSelector((state) => state.user.user);
 	async function displayRazorpay() {
 		const res = await loadSDK();
 		if (!res) {
@@ -73,7 +75,6 @@ const Payments = () => {
 					);
 					if (result.data.success) {
 						//payment success, send to tickets page
-						dispatch(checkAuth());
 						dispatch(
 							alertActions.createAlert({
 								message: "Payment Successfull. 🤗",

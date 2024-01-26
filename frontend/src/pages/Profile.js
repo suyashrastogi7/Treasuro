@@ -1,14 +1,14 @@
 import React from "react";
-
 import { useSelector } from "react-redux";
 
+//Components
 import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 import Detail from "../components/Detail";
 import { Verified } from "../components/AssetsExport";
 
 const Profile = () => {
-    const user = useSelector((state) => state.signin.loggedInUser);
+    const user = useSelector((state) => state.user.user);
     return (
         <Template>
             <div className="flex">

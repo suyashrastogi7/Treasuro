@@ -1,3 +1,4 @@
+//Components
 import Footer from "../components/Footer";
 import FooterMade from "../components/Footer/FooterMade";
 import Hero from "../components/Hero";
