@@ -10,7 +10,6 @@ import Rules from "../../pages/Rules";
 import Success from "../../pages/Success";
 
 export const PreAuthNavigator = () => {
-	console.log("Pre Auth");
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />

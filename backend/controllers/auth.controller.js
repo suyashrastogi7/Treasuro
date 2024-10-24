@@ -52,7 +52,6 @@ const refreshToken = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
-	console.log("here")
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(400).json({
@@ -67,7 +66,6 @@ const signUp = async (req, res) => {
 			$or: [{ username }, { email }, { phoneno }, { rollno }],
 		});
 
-		console.log("user", user)
 		//id user exists return error
 		if (user) {
 			return res
@@ -88,12 +86,12 @@ const signUp = async (req, res) => {
 
 		// image
 
-		// const uploadedResponse = await cloudinary.uploader.upload(image, {
-		// 	folder: `treasuro-db-22/${newUser.name + "--" + newUser.rollno}`,
-		// });
+		const uploadedResponse = await cloudinary.uploader.upload(image, {
+			folder: `treasuro-db-22/${newUser.name + "--" + newUser.rollno}`,
+		});
 
-		// newUser.image = uploadedResponse.secure_url;
-		newUser.image = "";
+		newUser.image = uploadedResponse.secure_url;
+		// newUser.image = "";
 
 		// encrypt the password
 		const salt = await bcrypt.genSalt(12);
@@ -127,7 +125,7 @@ const signIn = async (req, res) => {
 		});
 
 		if (!user) {
-			return res.status(422).json({
+			return res.status(400).json({
 				message: "User not registered",
 			});
 		}

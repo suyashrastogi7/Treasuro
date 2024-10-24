@@ -59,6 +59,21 @@ const Auth = () => {
 
 	const dispatch = useDispatch();
 
+	const isSignupDisabled = () => {
+		return (
+			signState.name === "" ||
+			signState.username === "" ||
+			signState.password === "" ||
+			signState.rollno === "" ||
+			signState.phoneno === "" ||
+			signState.email === ""
+		);
+	};
+
+	const isLoginDisabled = () => {
+		return formState.username === "" || formState.password === "";
+	};
+
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
 		const reader = new FileReader();
@@ -130,7 +145,7 @@ const Auth = () => {
 							formState={formState}
 							setValue={setFormState}
 							label="ZealTag"
-							Placeholder="0001"
+							Placeholder="use: 0034"
 							name="username"
 						/>
 						<Input
@@ -139,7 +154,7 @@ const Auth = () => {
 							formState={formState}
 							label="Password"
 							setValue={setFormState}
-							Placeholder="Password"
+							Placeholder="use: Hello1234"
 							name="password"
 						/>
 						<br />
@@ -251,6 +266,7 @@ const Auth = () => {
 	);
 	async function handleOnClick(event) {
 		event.preventDefault();
+		if (isLoginDisabled()) return;
 		setLoading(true);
 		const username = formState.username;
 		const password = formState.password;
@@ -271,11 +287,10 @@ const Auth = () => {
 				navigate("/", { replace: true });
 			}
 		} catch (err) {
-			console.log(err);
 			dispatch(
 				alertActions.createAlert({
 					status: "error",
-					message: err.message,
+					message: err?.data?.message,
 				})
 			);
 			resetForm(1);
@@ -284,6 +299,7 @@ const Auth = () => {
 	}
 	async function handleOnClickSignup(event) {
 		event.preventDefault();
+		if (isSignupDisabled()) return;
 		setLoading(true);
 		try {
 			const response = await signup(signState);
@@ -299,7 +315,6 @@ const Auth = () => {
 				navigate("/success", { replace: true });
 			}
 		} catch (err) {
-			console.log(err);
 			dispatch(
 				alertActions.createAlert({
 					status: "error",

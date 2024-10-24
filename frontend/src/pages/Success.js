@@ -15,7 +15,7 @@ const Success = () => {
 					Kindly Login to contnue.
 				</p>
 				<p className="text-white text-xl mt-2">
-					<Link to="/signin" replace className="text-black">
+					<Link to="/signin" replace className="text-hot-pink font-semibold">
 						Signin
 					</Link>{" "}
 					from Here.

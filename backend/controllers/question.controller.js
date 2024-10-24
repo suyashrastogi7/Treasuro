@@ -16,7 +16,6 @@ const getQuestion = async (req, res) => {
 			.select("-answer")
 			.select("-__v")
 			.then((question) => {
-				console.log(question)
 				return res.status(200).json({
 					question,
 				});

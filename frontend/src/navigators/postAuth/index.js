@@ -13,8 +13,6 @@ import Profile from "../../pages/Profile";
 import Ticket from "../../pages/Ticket";
 
 export const PostAuthNavigator = () => {
-	console.log("Post Auth");
-
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
