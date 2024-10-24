@@ -8,7 +8,20 @@ const helmet = require("helmet");
 const app = express();
 
 /** Middleware */
-app.use(helmet());
+app.use(
+	helmet({
+		contentSecurityPolicy: {
+			directives: {
+				defaultSrc: ["'self'"],
+				connectSrc: [
+					"'self'",
+					"http://127.0.0.1:8000",
+					"ws://localhost:42877/",
+				],
+			},
+		},
+	})
+);
 app.use(cors());
 
 if (process.env.NODE_ENV === "development") {
@@ -37,7 +50,7 @@ app.use("/api/leaderboard", require("./router/leaderboard"));
 app.use("/api/payment", require("./router/payment"));
 
 app.use("/", (_, res) => {
-	res.setHeader('Content-Security-Policy', "unsafe-inline");
+	res.setHeader("Content-Security-Policy", "unsafe-inline");
 	res.status(200).json({
 		message: "API Running",
 	});
