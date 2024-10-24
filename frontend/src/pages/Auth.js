@@ -17,9 +17,11 @@ import { signin, signup } from "../api/authAPI";
 
 //Utils
 import { auth } from "../utils/auth";
+import { authActions } from "../features/loginSlice";
+import { userActions } from "../features/userSlice";
 
 const Auth = () => {
-	const [active, setActive] = useState("Login")
+	const [active, setActive] = useState("Login");
 	const [loading, setLoading] = useState(false);
 
 	const [formState, setFormState] = useState({
@@ -38,20 +40,22 @@ const Auth = () => {
 	});
 
 	const resetForm = (type) => {
-		type ? setFormState({
-			username: "",
-			password: "",
-			rememberMe: false,
-		}) : setSignState({
-			name: "",
-			username: "",
-			password: "",
-			rollno: "",
-			email: "",
-			phoneno: "",
-			image: DefaultUSer,
-		})
-	}
+		type
+			? setFormState({
+					username: "",
+					password: "",
+					rememberMe: false,
+			  })
+			: setSignState({
+					name: "",
+					username: "",
+					password: "",
+					rollno: "",
+					email: "",
+					phoneno: "",
+					image: DefaultUSer,
+			  });
+	};
 
 	const dispatch = useDispatch();
 
@@ -247,15 +251,16 @@ const Auth = () => {
 	);
 	async function handleOnClick(event) {
 		event.preventDefault();
-		setLoading(true)
+		setLoading(true);
 		const username = formState.username;
 		const password = formState.password;
 		try {
-			const {token, user} = await signin({username, password});
-			console.log("TOKEN ==> ",token)
+			const { token, user } = await signin({ username, password });
 			if (!!token && !!user) {
 				auth.setToken(JSON.stringify(token));
 				auth.setUser(JSON.stringify(user));
+				dispatch(authActions.setToken(token));
+				dispatch(userActions.setUser(user));
 				dispatch(
 					alertActions.createAlert({
 						message: "Signed In Successfully 🤗",
@@ -279,9 +284,9 @@ const Auth = () => {
 	}
 	async function handleOnClickSignup(event) {
 		event.preventDefault();
-		setLoading(true)
+		setLoading(true);
 		try {
-			const response = await signup(signState)
+			const response = await signup(signState);
 			const { success } = response;
 			if (success) {
 				dispatch(
@@ -290,11 +295,10 @@ const Auth = () => {
 						status: "success",
 					})
 				);
-				setLoading(false)
+				setLoading(false);
 				navigate("/success", { replace: true });
 			}
-		} 
-		catch (err) {
+		} catch (err) {
 			console.log(err);
 			dispatch(
 				alertActions.createAlert({
@@ -303,7 +307,7 @@ const Auth = () => {
 				})
 			);
 			resetForm(0);
-			setLoading(false)
+			setLoading(false);
 		}
 	}
 };

@@ -31,6 +31,15 @@ const Payments = () => {
 	const access = useSelector((state) => state.signin.token.access);
 	const { name } = useSelector((state) => state.user.user);
 	async function displayRazorpay() {
+		if (!process.env.REACT_APP_PAYMENT_ENABLED) {
+			dispatch(
+				alertActions.createAlert({
+					message: "Payments are currently Disabled",
+					status: "error",
+				})
+			);
+			return;
+		}
 		const res = await loadSDK();
 		if (!res) {
 			alert("Razorpay SDK failed to load, Are you Online?");

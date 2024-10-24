@@ -6,8 +6,8 @@ export const auth = {
 	logout,
 	getUser,
 	isUserAvailable,
-	setUser, 
-	setToken
+	setUser,
+	setToken,
 };
 
 function getToken() {
@@ -19,18 +19,18 @@ function getUser() {
 }
 
 function setToken(token) {
-	localStorage.setItem(TOKEN_KEY, token)
+	localStorage.setItem(TOKEN_KEY, token);
 }
 
 function setUser(user) {
-	localStorage.setItem("user", user)
+	localStorage.setItem("user", user);
 }
 
 function isAuthenticated() {
 	return !!getToken();
 }
 
-function isUserAvailable(){
+function isUserAvailable() {
 	return !!localStorage.getItem("user");
 }
 

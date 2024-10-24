@@ -33,7 +33,7 @@ router.post(
 );
 
 /**
- * @route   POST /api/auth/s/ignin
+ * @route   POST /api/auth/s/ignins
  * @access  Public
  * @desc    Register user
  */

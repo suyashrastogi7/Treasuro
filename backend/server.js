@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "development") {
 	const morgan = require("morgan");
 	app.use(morgan("dev"));
 }
-// app.use(express.static("build"));
+app.use(express.static("build"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
@@ -37,6 +37,7 @@ app.use("/api/leaderboard", require("./router/leaderboard"));
 app.use("/api/payment", require("./router/payment"));
 
 app.use("/", (_, res) => {
+	res.setHeader('Content-Security-Policy', "unsafe-inline");
 	res.status(200).json({
 		message: "API Running",
 	});

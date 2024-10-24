@@ -8,9 +8,12 @@ export const signinSlice = createSlice({
 	name: "signin",
 	initialState,
 	reducers: {
-		setToken : (state, action) => {
+		setToken: (state, action) => {
 			state.token = action.payload;
-		}
+		},
+		removeToken: (state) => {
+			state.token = null;
+		},
 	},
 	extraReducers: {},
 });

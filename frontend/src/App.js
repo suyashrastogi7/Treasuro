@@ -1,29 +1,37 @@
-import { BrowserRouter as Router} from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./features/loginSlice";
-import { useEffect } from "react";
 
 //Navigators
 import { PostAuthNavigator } from "./navigators/postAuth";
 import { PreAuthNavigator } from "./navigators/preAuth";
 import { auth } from "./utils/auth";
 import { userActions } from "./features/userSlice";
+import { Alert } from "./components/Alert";
 
 const App = () => {
+	const loggedIn = !!useSelector((state) => state.signin.token);
 	const dispatch = useDispatch();
-	const loggedIn = !!useSelector(state => state.signin.token)
-
-	console.log("Logged In", loggedIn)
 
 	useEffect(() => {
-		auth.isAuthenticated() && dispatch(authActions.setToken(auth.getToken()));
-		auth.isUserAvailable() && dispatch(userActions.setUser(auth.getUser()));
+		dispatch(authActions.setToken(auth.getToken()));
+		dispatch(userActions.setUser(auth.getUser()));
 	}, [dispatch]);
 
 	return (
-		<Router>
-			{loggedIn ? <PostAuthNavigator /> : <PreAuthNavigator />}
-		</Router>
+		<>
+			{loggedIn ? (
+				<Router>
+					<PostAuthNavigator />
+				</Router>
+			) : (
+				<Router>
+					<PreAuthNavigator />
+				</Router>
+			)}
+			<Alert />
+		</>
 	);
 };
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "js-cookie";
+import { auth } from "./auth";
 
 const customAxios = axios.create({
 	baseURL: ``,
@@ -8,7 +8,7 @@ const customAxios = axios.create({
 
 customAxios.interceptors.request.use(
 	(config) => {
-		const token = Cookies.get("access-token");
+		const token = auth.getToken().access;
 		if (token) {
 			config.headers["Authorization"] = "Bearer " + token;
 		}
@@ -36,7 +36,7 @@ customAxios.interceptors.response.use(
 
 		if (error.response.status === 403 && !originalRequest._retry) {
 			originalRequest._retry = true;
-			const refreshToken = Cookies.get("refresh-token");
+			const refreshToken = auth.getToken().refresh;
 			return axios
 				.post("https://treasuro.in/api/auth/refresh", {
 					refresh: refreshToken,
@@ -46,9 +46,9 @@ customAxios.interceptors.response.use(
 						return Promise.reject(res);
 					}
 					if (res.status === 200) {
-						Cookies.set("refresh-token", res.data);
+						auth.setToken({ ...auth.getToken(), refresh: res.data });
 						axios.defaults.headers.common["Authorization"] =
-							"Bearer " + Cookies.get("access-token");
+							"Bearer " + auth.getToken()?.access;
 						return axios(originalRequest);
 					}
 				});
