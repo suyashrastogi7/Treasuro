@@ -1,11 +1,6 @@
 import React from "react";
 
-import {
-	LogoMain,
-	MmilLogo,
-	StarfishYellow,
-	LeavesGreen,
-} from "./AssetsExport";
+import { LogoMain, StarfishYellow, LeavesGreen } from "./AssetsExport";
 
 const Ticket = ({ id, use }) => {
 	return (
