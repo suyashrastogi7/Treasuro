@@ -15,7 +15,7 @@ app.use(
 				defaultSrc: ["'self'"],
 				connectSrc: [
 					"'self'",
-					"http://127.0.0.1:8000",
+					"http://localhost:5000",
 					"ws://localhost:42877/",
 				],
 			},
@@ -48,6 +48,14 @@ app.use("/api/question", require("./router/question"));
 app.use("/api/ticket", require("./router/ticket"));
 app.use("/api/leaderboard", require("./router/leaderboard"));
 app.use("/api/payment", require("./router/payment"));
+
+app.use((req, res, next) => {
+	res.setHeader(
+		"Content-Security-Policy",
+		"default-src 'self'; img-src 'self' https://res.cloudinary.com; media-src 'self' https://res.cloudinary.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+	);
+	next();
+});
 
 app.use("/", (_, res) => {
 	res.setHeader("Content-Security-Policy", "unsafe-inline");
