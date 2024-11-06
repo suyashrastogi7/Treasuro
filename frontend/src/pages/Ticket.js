@@ -6,7 +6,6 @@ import Template from "../components/Template";
 import TitleDash from "../components/TitleDash";
 import Ticket from "../components/Ticket";
 import { Link } from "react-router-dom";
-import { Coin } from "../components/AssetsExport";
 
 const Tickets = () => {
 	const tickets = useSelector((state) => state.user.user.tickets);
@@ -17,7 +16,11 @@ const Tickets = () => {
 					<TitleDash title="Tickets" />
 					<Link to="/payment">
 						<button className="flex justify-between items-center hover:shadow-lg cursor-pointer rounded-2xl px-3 py-2 md:px-6 md:py-2 bg-hot-pink font-semibold">
-							<img src={Coin} alt="coin" className="h-8 w-8 mr-3" />
+							<img
+								src={process.env.PUBLIC_URL + "/static/coin.png"}
+								alt="coin"
+								className="h-8 w-8 mr-3"
+							/>
 							<span className="text-white font-semibold text-lg texy-center align-middle">
 								Buy Attempts
 							</span>

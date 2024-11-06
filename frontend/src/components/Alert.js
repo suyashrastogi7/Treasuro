@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Success, Error, Status } from "./AssetsExport";
+import { Status } from "./AssetsExport";
 import { useSelector, useDispatch } from "react-redux";
 import { alertActions } from "../features/alertSlice";
 
@@ -34,7 +34,11 @@ export const Alert = () => {
 		>
 			<img
 				className="flex-shrink-0 w-6 h-6 my-auto text-green-700 dark:text-green-800"
-				src={alert.status === "success" ? Success : Error}
+				src={
+					alert.status === "success"
+						? process.env.PUBLIC_URL + "/static/success.png"
+						: process.env.PUBLIC_URL + "/static/error.png"
+				}
 				alt="status"
 			/>
 			<p

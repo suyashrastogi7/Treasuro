@@ -18,7 +18,7 @@ import Weed2 from "../assets/images/weed2.svg";
 import FirstPrize from "../assets/images/firstPrize.png";
 import SecondPrize from "../assets/images/secondPrize.png";
 import ThirdPrize from "../assets/images/thirdPrize.png";
-import MmilLogo from "../assets/images/mmilLogo.png";
+// import MmilLogo from "../assets/images/mmilLogo.png";
 import Submarine from "../assets/images/submarine.png";
 import paytm from "../assets/images/paytm.svg";
 import gpay from "../assets/images/gpay.svg";
@@ -33,55 +33,55 @@ import Arrow from "../assets/icons/arrow.svg";
 import Hamburger from "../assets/icons/hamburger.svg";
 import Cross from "../assets/icons/cross.svg";
 import Refresh from "../assets/icons/refresh.svg";
-import Coin from "../assets/icons/coin.png";
+// import Coin from "/static/coin.png";
 import Qr from "../assets/icons/qr.svg";
-import Success from "../assets/icons/success.png";
-import Error from "../assets/icons/error.png";
-import Verified from "../assets/icons/verified.png";
+// import Success from "../assets/icons/success.png";
+// import Error from "../assets/icons/error.png";
+// import Verified from "../assets/icons/verified.png";
 import Status from "../assets/icons/status.svg";
 
 import loaderAnimationData from "../assets/lottie/loader.json";
 
 export {
-    Blob1,
-    Blob2,
-    Blob3,
-    LeavesGreen,
-    LeavesPink,
-    loaderAnimationData,
-    LogoGreen,
-    LogoMain,
-    LogoWhite,
-    PrizeLines,
-    Refresh,
-    ScrollIcon,
-    Starfish,
-    StarfishYellow,
-    Weed1,
-    Weed1Black,
-    Weed1Lime,
-    Weed1Yellow,
-    Weed2,
-    FirstPrize,
-    SecondPrize,
-    ThirdPrize,
-    MmilLogo,
-    Submarine,
-    Discord,
-    Github,
-    Linkedin,
-    Mail,
-    Arrow,
-    Hamburger,
-    Cross,
-    paytm,
-    gpay,
-    scantopay,
-    DefaultUSer,
-    Coin,
-    Qr,
-    Success,
-    Error,
-    Verified,
-    Status,
+	Blob1,
+	Blob2,
+	Blob3,
+	LeavesGreen,
+	LeavesPink,
+	loaderAnimationData,
+	LogoGreen,
+	LogoMain,
+	LogoWhite,
+	PrizeLines,
+	Refresh,
+	ScrollIcon,
+	Starfish,
+	StarfishYellow,
+	Weed1,
+	Weed1Black,
+	Weed1Lime,
+	Weed1Yellow,
+	Weed2,
+	FirstPrize,
+	SecondPrize,
+	ThirdPrize,
+	// MmilLogo,
+	Submarine,
+	Discord,
+	Github,
+	Linkedin,
+	Mail,
+	Arrow,
+	Hamburger,
+	Cross,
+	paytm,
+	gpay,
+	scantopay,
+	DefaultUSer,
+	// Coin,
+	Qr,
+	// Success,
+	// Error,
+	// Verified,
+	Status,
 };

@@ -35,7 +35,11 @@ const Ticket = ({ id, use }) => {
 				</h1>
 				<div className="flex justify-between">
 					<img src={LogoMain} className="lg:h-12 h-8" alt="treasuro-logo" />
-					<img src={MmilLogo} className="lg:h-12 h-8" alt="mmil-logo" />
+					<img
+						src={process.env.PUBLIC_URL + "/static/mmilLogo.png"}
+						className="lg:h-12 h-8"
+						alt="mmil-logo"
+					/>
 				</div>
 			</div>
 			<div className="bg-[#171C46] rounded-2xl px-8 py-5 -translate-y-5 z-10 hover:shadow-2xl transition ease-in-out">
