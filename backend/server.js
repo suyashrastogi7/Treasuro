@@ -52,7 +52,7 @@ app.use("/api/payment", require("./router/payment"));
 app.use((req, res, next) => {
 	res.setHeader(
 		"Content-Security-Policy",
-		"default-src 'self'; img-src 'self' https://res.cloudinary.com; media-src 'self' https://res.cloudinary.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+		"default-src 'self'; img-src 'self' https://res.cloudinary.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
 	);
 	next();
 });
